@@ -1,0 +1,52 @@
+{
+    "name": "@paczkoapi/common",
+    "version": "0.1.0",
+    "main": "./dist/cjs/index.cjs",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.js"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.cjs"
+            },
+            "default": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.js"
+            }
+        }
+    },
+    "sideEffects": false,
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kedrzu/paczkoapi.git"
+    },
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "smoke:mjs": "node tests/smoke.test.mjs",
+        "smoke:cjs": "node tests/smoke.test.cjs"
+    },
+    "dependencies": {
+        "@nzyme/types": "^0.8.0",
+        "@nzyme/utils": "^0.8.0",
+        "tslib": "^2.8.1"
+    },
+    "devDependencies": {
+        "@nzyme/eslint": "^0.8.0",
+        "@nzyme/tsconfig": "^0.8.0",
+        "@nzyme/vitest": "^0.8.0",
+        "typescript": "^5.8.2"
+    }
+}
