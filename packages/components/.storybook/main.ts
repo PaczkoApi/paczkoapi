@@ -3,7 +3,7 @@ import type { StorybookConfig } from '@storybook/html-vite';
 import { resolveProjectPath } from '@nzyme/project-utils';
 
 const config: StorybookConfig = {
-    stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+    stories: [],
     addons: [
         resolveProjectPath('@storybook/addon-essentials'),
         resolveProjectPath('@chromatic-com/storybook'),

@@ -10,10 +10,9 @@ module.exports = {
         prettier: true,
     },
     options: {
-        react: {
-            stylesType: 'style-tag',
+        react: {},
+        vue: {
+            api: 'composition',
         },
-        svelte: {},
-        qwik: {},
     },
 };
