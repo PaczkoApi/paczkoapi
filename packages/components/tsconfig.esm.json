@@ -1,0 +1,14 @@
+{
+    "extends": "@nzyme/tsconfig/esm.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "tsBuildInfoFile": "./tsconfig.esm.tsbuildinfo",
+        "emitDeclarationOnly": true,
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "jsx": "preserve",
+        "jsxImportSource": "@builder.io/mitosis"
+    },
+    "include": ["src"]
+}

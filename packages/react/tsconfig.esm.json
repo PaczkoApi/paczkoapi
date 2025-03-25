@@ -1,0 +1,12 @@
+{
+    "extends": "@nzyme/tsconfig/react.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist/esm",
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "tsBuildInfoFile": "./tsconfig.esm.tsbuildinfo"
+    },
+    "include": ["src"],
+    "exclude": ["src/**/*.stories.tsx"]
+}

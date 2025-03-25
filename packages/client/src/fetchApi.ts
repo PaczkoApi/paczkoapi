@@ -3,7 +3,7 @@ import { ApiError } from './ApiError.js';
 /**
  * Fetch data from the API.
  */
-export async function fetchApi<T>(url: string): Promise<T> {
+export async function fetchApi<T>(url: string): Promise<T | null> {
     const response = await fetch(url);
     if (!response.ok) {
         if (response.status === 400) {
@@ -17,6 +17,10 @@ export async function fetchApi<T>(url: string): Promise<T> {
         const error = await response.text();
         const message = 'Failed to fetch API';
         throw new ApiError(message, response.status, [error], response);
+    }
+
+    if (response.status === 204) {
+        return null;
     }
 
     const data = await response.json();

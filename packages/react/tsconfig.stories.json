@@ -1,0 +1,11 @@
+{
+    "extends": "@nzyme/tsconfig/react.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "noEmit": true,
+        "composite": false
+    },
+    "include": ["src", "stories", ".storybook"]
+}

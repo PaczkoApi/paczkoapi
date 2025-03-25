@@ -1,0 +1,10 @@
+{
+    "extends": "@nzyme/tsconfig/vue.json",
+    "compilerOptions": {
+        "rootDir": "./",
+        "moduleResolution": "bundler",
+        "module": "ESNext",
+        "noEmit": true
+    },
+    "include": ["src", "stories", "vite.config.ts"]
+}

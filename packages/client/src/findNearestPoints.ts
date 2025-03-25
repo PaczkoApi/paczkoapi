@@ -1,8 +1,8 @@
 import { API_URL_POINTS, getApiUrl } from '@paczkoapi/common';
 
 import { ApiError } from './ApiError.js';
-import type { PickupPoint, PickupPointType } from './types.js';
 import { fetchApi } from './fetchApi.js';
+import type { PickupPoint, PickupPointType } from './types.js';
 
 /**
  * Find nearest points input
@@ -18,21 +18,31 @@ export interface FindNearestPointsInput {
      * @example ["inpost", "dpd"]
      */
     type?: PickupPointType | PickupPointType[];
+
     /**
      * City name
      * @example "Warszawa"
      */
     city: string;
+
     /**
      * Postal code
      * @example "00-000"
      */
     postalCode?: string;
+
     /**
      * Address including street name and number.
      * @example "ul. Jana Pawła II 1"
      */
     address: string;
+
+    /**
+     * Limit the number of points returned.
+     * @example 10
+     * @default 5
+     */
+    limit?: number;
 }
 
 /**
@@ -60,5 +70,11 @@ export async function findNearestPoints(input: FindNearestPointsInput) {
         url.searchParams.set('postalCode', input.postalCode.toLowerCase());
     }
 
-    return await fetchApi<PickupPoint[]>(url.toString());
+    if (input.limit) {
+        url.searchParams.set('limit', input.limit.toString());
+    }
+
+    const points = await fetchApi<PickupPoint[]>(url.toString());
+
+    return points ?? [];
 }
