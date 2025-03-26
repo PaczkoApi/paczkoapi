@@ -1,6 +1,5 @@
-import { API_URL_POINTS, getApiUrl } from '@paczkoapi/common';
+import { API_URL_POINTS, ApiError, getApiUrl, parseProviders } from '@paczkoapi/config';
 
-import { ApiError } from './ApiError.js';
 import { fetchApi } from './fetchApi.js';
 import type { PickupPoint, PickupPointType } from './types.js';
 
@@ -35,7 +34,7 @@ export interface FindNearestPointsInput {
      * Address including street name and number.
      * @example "ul. Jana Pawła II 1"
      */
-    address: string;
+    street: string;
 
     /**
      * Limit the number of points returned.
@@ -43,6 +42,11 @@ export interface FindNearestPointsInput {
      * @default 5
      */
     limit?: number;
+
+    /**
+     * Abort signal
+     */
+    signal?: AbortSignal;
 }
 
 /**
@@ -52,19 +56,20 @@ export async function findNearestPoints(input: FindNearestPointsInput) {
     const url = new URL(API_URL_POINTS, getApiUrl());
 
     if (input.type) {
-        url.searchParams.set('type', Array.isArray(input.type) ? input.type.join(',') : input.type);
+        const providers = parseProviders(input.type);
+        url.searchParams.set('type', providers.join(','));
     }
 
     if (!input.city) {
         throw new ApiError('City is required', 400, ['City is required']);
     }
 
-    if (!input.address) {
+    if (!input.street) {
         throw new ApiError('Address is required', 400, ['Address is required']);
     }
 
     url.searchParams.set('city', input.city.toLowerCase());
-    url.searchParams.set('address', input.address.toLowerCase());
+    url.searchParams.set('street', input.street.toLowerCase());
 
     if (input.postalCode) {
         url.searchParams.set('postalCode', input.postalCode.toLowerCase());
@@ -74,7 +79,9 @@ export async function findNearestPoints(input: FindNearestPointsInput) {
         url.searchParams.set('limit', input.limit.toString());
     }
 
-    const points = await fetchApi<PickupPoint[]>(url.toString());
+    const points = await fetchApi<PickupPoint[]>(url.toString(), {
+        signal: input.signal,
+    });
 
     return points ?? [];
 }

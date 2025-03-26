@@ -1,0 +1,210 @@
+:host {
+    /* Typography */
+    --pickup-font-family: system-ui, -apple-system, sans-serif;
+    --pickup-font-size-base: 1rem;
+    --pickup-font-size-sm: 0.8rem;
+    --pickup-font-weight-normal: 400;
+    --pickup-font-weight-medium: 500;
+    --pickup-font-weight-bold: 600;
+
+    /* Spacing */
+    --pickup-spacing-xs: 0.25rem;
+    --pickup-spacing-sm: 0.5rem;
+    --pickup-spacing-md: 1rem;
+    --pickup-spacing-lg: 1.5rem;
+
+    /* Colors - Light Theme */
+    --pickup-color-text: #1a1a1a;
+    --pickup-color-text-secondary: #666;
+    --pickup-color-border: #e2e8f0;
+    --pickup-color-border-hover: #cbd5e1;
+    --pickup-color-border-selected: #3b82f6;
+    --pickup-color-background: #fff;
+    --pickup-color-background-hover: #f8fafc;
+    --pickup-color-background-selected: #f0f7ff;
+    --pickup-color-radio: #3b82f6;
+    --pickup-color-radio-border: #cbd5e1;
+
+    /* Border Radius */
+    --pickup-border-radius: 0.5rem;
+    --pickup-border-radius-sm: 0.25rem;
+
+    /* Transitions */
+    --pickup-transition-duration: 200ms;
+    --pickup-transition-timing: ease-in-out;
+}
+
+/* Dark Theme */
+[data-theme='dark'] {
+    --pickup-color-text: #f1f5f9;
+    --pickup-color-text-secondary: #94a3b8;
+    --pickup-color-border: #334155;
+    --pickup-color-border-hover: #475569;
+    --pickup-color-border-selected: #60a5fa;
+    --pickup-color-background: #1e293b;
+    --pickup-color-background-hover: #334155;
+    --pickup-color-background-selected: #1e3a8a;
+    --pickup-color-radio: #60a5fa;
+    --pickup-color-radio-border: #475569;
+}
+
+:host {
+    font-family: var(--pickup-font-family);
+    background-color: var(--pickup-color-background);
+    color: var(--pickup-color-text);
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    max-width: 600px;
+}
+
+label {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--pickup-spacing-md);
+    cursor: pointer;
+    position: relative;
+    margin-bottom: var(--pickup-spacing-sm);
+    border: 1px solid var(--pickup-color-border);
+    border-radius: var(--pickup-border-radius);
+    transition: all var(--pickup-transition-duration) var(--pickup-transition-timing);
+
+    &:hover {
+        border-color: var(--pickup-color-border-hover);
+        background-color: var(--pickup-color-background-hover);
+    }
+}
+
+.radio {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--pickup-color-radio-border);
+    border-radius: 50%;
+    margin-right: var(--pickup-spacing-md);
+    position: relative;
+    transition: border-color var(--pickup-transition-duration) var(--pickup-transition-timing);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--pickup-color-radio);
+        transition: transform var(--pickup-transition-duration) var(--pickup-transition-timing);
+    }
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pickup-spacing-xs);
+}
+
+.name {
+    font-size: var(--pickup-font-size-base);
+    font-weight: var(--pickup-font-weight-medium);
+    color: var(--pickup-color-text);
+}
+
+.address {
+    font-size: var(--pickup-font-size-sm);
+    color: var(--pickup-color-text-secondary);
+}
+
+.price-provider {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--pickup-spacing-xs);
+    margin-left: var(--pickup-spacing-md);
+}
+
+.price {
+    font-size: var(--pickup-font-size-base);
+    font-weight: var(--pickup-font-weight-medium);
+    color: var(--pickup-color-text);
+    margin-bottom: auto;
+}
+
+.provider {
+    width: 60px;
+    height: 30px;
+    object-fit: contain;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    &_large {
+        width: 80px;
+        height: 40px;
+    }
+}
+
+input:checked + .radio::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+input:checked + .radio {
+    border-color: var(--pickup-color-radio);
+}
+
+input:checked ~ .content {
+    background-color: var(--pickup-color-background-selected);
+}
+
+input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Style Variations */
+.pickup-points[data-style='plain'] .pickup-point {
+    border-color: transparent;
+    background-color: transparent;
+
+    &:hover {
+        border-color: transparent;
+        background-color: transparent;
+    }
+
+    &__input:checked ~ &__content {
+        background-color: transparent;
+    }
+}
+
+.pickup-points[data-style='border'] .pickup-point {
+    &__input:checked ~ &__content {
+        background-color: transparent;
+    }
+
+    &__input:checked + &__radio {
+        border-color: var(--pickup-color-border-selected);
+    }
+}
+
+.pickup-points[data-style='background'] .pickup-point {
+    border-color: transparent;
+
+    &:hover {
+        border-color: transparent;
+    }
+
+    &__input:checked + &__radio {
+        border-color: var(--pickup-color-radio);
+    }
+}

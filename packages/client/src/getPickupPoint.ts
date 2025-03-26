@@ -1,4 +1,4 @@
-import { API_URL_POINTS, getApiUrl } from '@paczkoapi/common';
+import { API_URL_POINTS, getApiUrl } from '@paczkoapi/config';
 
 import { fetchApi } from './fetchApi.js';
 import type { PickupPoint, PickupPointType } from './types.js';

@@ -43,9 +43,9 @@
         "@paczkoapi/client": "0.1.0"
     },
     "devDependencies": {
-        "@paczkoapi/components": "0.1.0",
-        "@chromatic-com/storybook": "^3",
+        "@chromatic-com/storybook": "^3.2.6",
         "@nzyme/project-utils": "^0.8.0",
+        "@paczkoapi/components": "0.1.0",
         "@storybook/addon-essentials": "^8.6.9",
         "@storybook/addon-onboarding": "^8.6.9",
         "@storybook/blocks": "^8.6.9",
@@ -54,10 +54,10 @@
         "@storybook/vue3-vite": "^8.6.9",
         "@vitejs/plugin-vue": "^5.2.3",
         "@vitejs/plugin-vue-jsx": "^4.1.2",
-        "@vue/compiler-sfc": "^3.3.4",
-        "storybook": "^8.6.9",
+        "@vue/compiler-sfc": "^3.5.13",
         "sass": "^1.86.0",
-        "typescript": "^5.0.0"
+        "storybook": "^8.6.9",
+        "typescript": "^5.8.2"
     },
     "peerDependencies": {
         "vue": "^3"

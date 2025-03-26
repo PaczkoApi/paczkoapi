@@ -43,9 +43,9 @@
         "@paczkoapi/client": "0.1.0"
     },
     "devDependencies": {
-        "@paczkoapi/components": "0.1.0",
-        "@chromatic-com/storybook": "^3",
+        "@chromatic-com/storybook": "^3.2.6",
         "@nzyme/project-utils": "^0.8.0",
+        "@paczkoapi/components": "0.1.0",
         "@storybook/addon-essentials": "^8.6.9",
         "@storybook/addon-interactions": "^8.6.9",
         "@storybook/addon-onboarding": "^8.6.9",

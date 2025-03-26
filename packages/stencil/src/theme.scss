@@ -1,0 +1,168 @@
+$primary-color: var(--paczkoapi-primary-color, #3366ff);
+$secondary-color: var(--paczkoapi-secondary-color, #f5f5f5);
+$border-color: var(--paczkoapi-border-color, #e0e0e0);
+$text-color: var(--paczkoapi-text-color, #333333);
+$error-color: var(--paczkoapi-error-color, #ff3333);
+
+$font-size-base: var(--paczkoapi-font-size-base, 16px);
+$font-size-small: var(--paczkoapi-font-size-small, 14px);
+$font-size-large: var(--paczkoapi-font-size-large, 18px);
+
+$border-radius: var(--paczkoapi-border-radius, 4px);
+$padding-small: var(--paczkoapi-padding-small, 8px);
+$padding-medium: var(--paczkoapi-padding-medium, 12px);
+$padding-large: var(--paczkoapi-padding-large, 16px);
+
+$transition-duration: var(--paczkoapi-transition-duration, 0.2s);
+$class-prefix: 'paczkoapi';
+
+@function prefixed($class) {
+  @return #{$class-prefix}-#{$class};
+}
+
+@mixin prefixed-class($name) {
+  .#{prefixed($name)} {
+    @content;
+  }
+}
+
+@include prefixed-class('selector') {
+  width: 100%;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+  color: $text-color;
+}
+
+@include prefixed-class('selector-label') {
+  font-size: $font-size-large;
+  font-weight: bold;
+  padding: $padding-medium;
+  border-bottom: 1px solid $border-color;
+}
+
+@include prefixed-class('selector-list') {
+  max-height: var(--paczkoapi-list-max-height, 400px);
+  overflow-y: auto;
+}
+
+@include prefixed-class('selector-item') {
+  display: flex;
+  border-bottom: 1px solid $border-color;
+  transition: background-color $transition-duration ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--paczkoapi-hover-bg-color, rgba(51, 102, 255, 0.05));
+  }
+}
+
+@include prefixed-class('selector-item-selected') {
+  background-color: var(--paczkoapi-selected-bg-color, rgba(51, 102, 255, 0.1));
+}
+
+@include prefixed-class('selector-radio') {
+  position: absolute;
+  opacity: 0;
+
+  &:focus + .selector-label {
+    outline: 2px solid $primary-color;
+    outline-offset: -2px;
+  }
+
+  &:checked + .selector-label {
+    background-color: var(--paczkoapi-selected-bg-color, rgba(51, 102, 255, 0.1));
+  }
+}
+
+@include prefixed-class('selector-label') {
+  display: block;
+  width: 100%;
+  padding: $padding-large;
+  cursor: pointer;
+}
+
+@include prefixed-class('selector-name') {
+  font-weight: bold;
+  margin-bottom: $padding-small;
+}
+
+@include prefixed-class('selector-address') {
+  font-size: $font-size-small;
+  margin-bottom: $padding-small;
+}
+
+@include prefixed-class('selector-hours') {
+  font-size: $font-size-small;
+  color: var(--paczkoapi-secondary-text-color, #666666);
+}
+
+@include prefixed-class('selector-loading') {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-large;
+  min-height: 100px;
+}
+
+@include prefixed-class('spinner') {
+  width: 40px;
+  height: 40px;
+  animation: #{prefixed('spin')} 1s linear infinite;
+}
+
+@include prefixed-class('spinner-circle') {
+  stroke: $primary-color;
+  stroke-linecap: round;
+  animation: #{prefixed('dash')} 1.5s ease-in-out infinite;
+}
+
+@include prefixed-class('selector-error') {
+  padding: $padding-large;
+  color: $error-color;
+}
+
+@include prefixed-class('selector-empty') {
+  padding: $padding-large;
+  text-align: center;
+  color: var(--paczkoapi-secondary-text-color, #666666);
+}
+
+@include prefixed-class('sr-only') {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes #{prefixed('spin')} {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes #{prefixed('dash')} {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

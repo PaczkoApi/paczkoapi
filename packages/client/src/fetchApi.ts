@@ -1,10 +1,10 @@
-import { ApiError } from './ApiError.js';
+import { ApiError } from '@paczkoapi/config';
 
 /**
  * Fetch data from the API.
  */
-export async function fetchApi<T>(url: string): Promise<T | null> {
-    const response = await fetch(url);
+export async function fetchApi<T>(url: string, init?: RequestInit): Promise<T | null> {
+    const response = await fetch(url, init);
     if (!response.ok) {
         if (response.status === 400) {
             const data = (await response.json()) as {

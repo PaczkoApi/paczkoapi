@@ -2,7 +2,7 @@
     "name": "@paczkoapi/client",
     "version": "0.1.0",
     "main": "./dist/cjs/index.cjs",
-    "types": "./dist/cjs/index.d.ts",
+    "types": "./dist/esm/index.d.ts",
     "exports": {
         ".": {
             "import": {
@@ -41,7 +41,7 @@
     "dependencies": {
         "@nzyme/types": "^0.8.0",
         "@nzyme/utils": "^0.8.0",
-        "@paczkoapi/common": "0.1.0",
+        "@paczkoapi/config": "0.1.0",
         "tslib": "^2.8.1"
     },
     "devDependencies": {
