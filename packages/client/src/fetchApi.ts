@@ -1,4 +1,4 @@
-import { ApiError } from '@paczkoapi/config';
+import { ApiError } from '@paczkoapi/common';
 
 /**
  * Fetch data from the API.

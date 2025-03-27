@@ -1,0 +1,89 @@
+/* Modal styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    color: #213547;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding-left: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.5rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.close {
+    display: flex;
+    height: 4rem;
+    width: 4rem;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #000;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.content {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .modal {
+        width: 90%;
+        max-width: 1400px;
+        height: 80vh;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .header {
+        height: 4rem;
+    }
+
+    .close {
+        height: 4rem;
+        width: 4rem;
+    }
+}

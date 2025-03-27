@@ -1,4 +1,4 @@
-import { setApiLocal } from '@paczkoapi/config';
+import { setApiLocal } from '@paczkoapi/common';
 import type { Preview } from '@storybook/web-components';
 import { INITIAL_VIEWPORTS, MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 

@@ -1,7 +1,7 @@
-import { API_URL_POINTS, ApiError, getApiUrl, parseProviders } from '@paczkoapi/config';
+import type { PickupPoint, Provider } from '@paczkoapi/common';
+import { API_URL_POINTS, ApiError, getApiUrl, parseProviders } from '@paczkoapi/common';
 
 import { fetchApi } from './fetchApi.js';
-import type { PickupPoint, PickupPointType } from './types.js';
 
 /**
  * Find nearest points input
@@ -16,7 +16,7 @@ export interface FindNearestPointsInput {
      * @example "inpost"
      * @example ["inpost", "dpd"]
      */
-    type?: PickupPointType | PickupPointType[];
+    type?: Provider | Provider[];
 
     /**
      * City name
@@ -57,7 +57,9 @@ export async function findNearestPoints(input: FindNearestPointsInput) {
 
     if (input.type) {
         const providers = parseProviders(input.type);
-        url.searchParams.set('type', providers.join(','));
+        if (providers.length === 0) {
+            url.searchParams.set('type', providers.join(','));
+        }
     }
 
     if (!input.city) {

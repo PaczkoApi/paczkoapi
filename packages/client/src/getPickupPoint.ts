@@ -1,7 +1,7 @@
-import { API_URL_POINTS, getApiUrl } from '@paczkoapi/config';
+import { API_URL_POINTS, getApiUrl } from '@paczkoapi/common';
+import type { PickupPoint, Provider } from '@paczkoapi/common';
 
 import { fetchApi } from './fetchApi.js';
-import type { PickupPoint, PickupPointType } from './types.js';
 
 /**
  * Parameters for getting a point by type and ID.
@@ -12,7 +12,7 @@ export interface GetPointParams {
      *
      * @example 'inpost'
      */
-    type: PickupPointType;
+    type: Provider;
     /**
      * ID of the point
      *

@@ -8,45 +8,44 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PickupPoint, Provider } from "@paczkoapi/client";
 export { PickupPoint, Provider } from "@paczkoapi/client";
 export namespace Components {
-    interface MyComponent {
+    interface PaczkoapiMapInpost {
+    }
+    interface PaczkoapiModal {
         /**
-          * The first name
+          * The title of the map
          */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+        "modalTitle": string | null;
     }
     interface PaczkoapiSelector {
         /**
           * The city to search for pickup points
          */
-        "addressCity": string;
+        "addressCity": string | null;
         /**
           * The postal code to search for pickup points
          */
-        "addressPostalCode": string;
+        "addressPostalCode": string | null;
         /**
           * The street to search for pickup points
          */
-        "addressStreet": string;
+        "addressStreet": string | null;
         /**
           * The limit of pickup points to fetch
          */
         "limit": number;
         /**
+          * The currently selected pickup point
+          * @readonly
+         */
+        "point": PickupPoint | null;
+        /**
           * The price of DHL pickup points
          */
-        "priceDhl": number;
+        "priceDhl": number | null;
         /**
           * The price of InPost pickup points
          */
-        "priceInpost": number;
+        "priceInpost": number | null;
         /**
           * The providers to search for pickup points
          */
@@ -65,19 +64,55 @@ export namespace Components {
         "theme": 'border' | 'default';
     }
 }
+export interface PaczkoapiMapInpostCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPaczkoapiMapInpostElement;
+}
+export interface PaczkoapiModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPaczkoapiModalElement;
+}
 export interface PaczkoapiSelectorCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPaczkoapiSelectorElement;
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLPaczkoapiMapInpostElementEventMap {
+        "close": void;
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    interface HTMLPaczkoapiMapInpostElement extends Components.PaczkoapiMapInpost, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLPaczkoapiMapInpostElement: {
+        prototype: HTMLPaczkoapiMapInpostElement;
+        new (): HTMLPaczkoapiMapInpostElement;
+    };
+    interface HTMLPaczkoapiModalElementEventMap {
+        "close": void;
+    }
+    interface HTMLPaczkoapiModalElement extends Components.PaczkoapiModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLPaczkoapiModalElementEventMap>(type: K, listener: (this: HTMLPaczkoapiModalElement, ev: PaczkoapiModalCustomEvent<HTMLPaczkoapiModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLPaczkoapiModalElementEventMap>(type: K, listener: (this: HTMLPaczkoapiModalElement, ev: PaczkoapiModalCustomEvent<HTMLPaczkoapiModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLPaczkoapiModalElement: {
+        prototype: HTMLPaczkoapiModalElement;
+        new (): HTMLPaczkoapiModalElement;
     };
     interface HTMLPaczkoapiSelectorElementEventMap {
-        "pointSelected": PickupPoint;
+        "selected": PickupPoint;
     }
     interface HTMLPaczkoapiSelectorElement extends Components.PaczkoapiSelector, HTMLStencilElement {
         addEventListener<K extends keyof HTMLPaczkoapiSelectorElementEventMap>(type: K, listener: (this: HTMLPaczkoapiSelectorElement, ev: PaczkoapiSelectorCustomEvent<HTMLPaczkoapiSelectorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -94,38 +129,41 @@ declare global {
         new (): HTMLPaczkoapiSelectorElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "paczkoapi-map-inpost": HTMLPaczkoapiMapInpostElement;
+        "paczkoapi-modal": HTMLPaczkoapiModalElement;
         "paczkoapi-selector": HTMLPaczkoapiSelectorElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface PaczkoapiMapInpost {
         /**
-          * The first name
+          * Event emitted when modal is closed
          */
-        "first"?: string;
+        "onClose"?: (event: PaczkoapiMapInpostCustomEvent<void>) => void;
+    }
+    interface PaczkoapiModal {
         /**
-          * The last name
+          * The title of the map
          */
-        "last"?: string;
+        "modalTitle"?: string | null;
         /**
-          * The middle name
+          * Event emitted when modal is closed
          */
-        "middle"?: string;
+        "onClose"?: (event: PaczkoapiModalCustomEvent<void>) => void;
     }
     interface PaczkoapiSelector {
         /**
           * The city to search for pickup points
          */
-        "addressCity"?: string;
+        "addressCity"?: string | null;
         /**
           * The postal code to search for pickup points
          */
-        "addressPostalCode"?: string;
+        "addressPostalCode"?: string | null;
         /**
           * The street to search for pickup points
          */
-        "addressStreet"?: string;
+        "addressStreet"?: string | null;
         /**
           * The limit of pickup points to fetch
          */
@@ -133,15 +171,20 @@ declare namespace LocalJSX {
         /**
           * Event emitted when a pickup point is selected
          */
-        "onPointSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
+        "onSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
+        /**
+          * The currently selected pickup point
+          * @readonly
+         */
+        "point"?: PickupPoint | null;
         /**
           * The price of DHL pickup points
          */
-        "priceDhl"?: number;
+        "priceDhl"?: number | null;
         /**
           * The price of InPost pickup points
          */
-        "priceInpost"?: number;
+        "priceInpost"?: number | null;
         /**
           * The providers to search for pickup points
          */
@@ -160,7 +203,8 @@ declare namespace LocalJSX {
         "theme"?: 'border' | 'default';
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "paczkoapi-map-inpost": PaczkoapiMapInpost;
+        "paczkoapi-modal": PaczkoapiModal;
         "paczkoapi-selector": PaczkoapiSelector;
     }
 }
@@ -168,7 +212,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "paczkoapi-map-inpost": LocalJSX.PaczkoapiMapInpost & JSXBase.HTMLAttributes<HTMLPaczkoapiMapInpostElement>;
+            "paczkoapi-modal": LocalJSX.PaczkoapiModal & JSXBase.HTMLAttributes<HTMLPaczkoapiModalElement>;
             "paczkoapi-selector": LocalJSX.PaczkoapiSelector & JSXBase.HTMLAttributes<HTMLPaczkoapiSelectorElement>;
         }
     }

@@ -1,26 +1,5 @@
-/**
- * Pickup point types
- */
-export const PickupPointType = ['inpost', 'dhl'] as const;
-
-/**
- * Pickup point type
- */
-export type PickupPointType = (typeof PickupPointType)[number];
-
-/**
- * Location of the pickup point
- */
-export interface PickupPointLocation {
-    /**
-     * Latitude
-     */
-    lat: number;
-    /**
-     * Longitude
-     */
-    lng: number;
-}
+import type { Location } from './Location.js';
+import type { Provider } from './providers.js';
 
 /**
  * Pickup point
@@ -29,7 +8,7 @@ export interface PickupPoint {
     /**
      * Type of the pickup point
      */
-    type: PickupPointType;
+    type: Provider;
 
     /**
      * ID of the pickup point
@@ -59,5 +38,5 @@ export interface PickupPoint {
     /**
      * Location of the pickup point
      */
-    location?: PickupPointLocation;
+    location?: Location;
 }
