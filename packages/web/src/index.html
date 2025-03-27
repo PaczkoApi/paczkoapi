@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+
+        <title>PaczkoAPI</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+        />
+        <script
+            type="module"
+            src="/build/lib.esm.js"
+        ></script>
+        <style>
+            body {
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container">
+            <section class="grid">
+                <form>
+                    <fieldset>
+                        <label>
+                            Miasto
+                            <input
+                                name="city"
+                                autocomplete="address-level2"
+                            />
+                        </label>
+                        <label>
+                            Kod pocztowy
+                            <input
+                                type="text"
+                                name="postalCode"
+                                autocomplete="postal-code"
+                            />
+                        </label>
+
+                        <label>
+                            Adres
+                            <input
+                                type="text"
+                                name="address"
+                                autocomplete="street-address"
+                            />
+                        </label>
+                    </fieldset>
+
+                    <input
+                        type="submit"
+                        value="Zapisz adres"
+                    />
+                </form>
+                <paczkoapi-selector></paczkoapi-selector>
+            </section>
+
+            <pre><code id="point">Tutaj wyświetli się wybrany punkt</code></pre>
+        </main>
+
+        <script>
+            window.PACZKOAPI_API_URL = 'http://localhost:3000';
+
+            const form = document.querySelector('form');
+            const selector = document.querySelector('paczkoapi-selector');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+
+                selector.setAddress({
+                    city: form.city.value,
+                    postalCode: form.postalCode.value,
+                    street: form.address.value,
+                });
+            });
+
+            selector.addEventListener('pointSelected', e => {
+                console.log(e);
+                selector.point;
+                const point = e.detail;
+                document.getElementById('point').textContent = JSON.stringify(point, null, 2);
+            });
+        </script>
+    </body>
+</html>

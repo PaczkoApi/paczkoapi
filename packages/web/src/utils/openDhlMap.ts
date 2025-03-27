@@ -70,7 +70,7 @@ export async function openDhlMap() {
         }
 
         return {
-            type: 'dhl',
+            provider: 'dhl',
             id: message.sap,
             name: message.name,
             address,

@@ -39,6 +39,14 @@ export namespace Components {
          */
         "point": PickupPoint | null;
         /**
+          * The currently selected pickup point ID
+         */
+        "pointName": string | null;
+        /**
+          * The currently selected pickup point type
+         */
+        "pointProvider": Provider | null;
+        /**
           * The price of DHL pickup points
          */
         "priceDhl": number | null;
@@ -50,14 +58,11 @@ export namespace Components {
           * The providers to search for pickup points
          */
         "providers": Provider[] | Provider;
+        "selectPoint": (provider: Provider, id: string) => Promise<void>;
         /**
-          * The currently selected pickup point ID
+          * Set the address of the selector
          */
-        "selectedPoint": string | null;
-        /**
-          * The currently selected pickup point type
-         */
-        "selectedProvider": Provider | null;
+        "setAddress": (address: { city?: string; postalCode?: string; street?: string; }) => Promise<void>;
         /**
           * The theme of the selector
          */
@@ -112,7 +117,7 @@ declare global {
         new (): HTMLPaczkoapiModalElement;
     };
     interface HTMLPaczkoapiSelectorElementEventMap {
-        "selected": PickupPoint;
+        "pointSelected": PickupPoint;
     }
     interface HTMLPaczkoapiSelectorElement extends Components.PaczkoapiSelector, HTMLStencilElement {
         addEventListener<K extends keyof HTMLPaczkoapiSelectorElementEventMap>(type: K, listener: (this: HTMLPaczkoapiSelectorElement, ev: PaczkoapiSelectorCustomEvent<HTMLPaczkoapiSelectorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -171,12 +176,20 @@ declare namespace LocalJSX {
         /**
           * Event emitted when a pickup point is selected
          */
-        "onSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
+        "onPointSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
         /**
           * The currently selected pickup point
           * @readonly
          */
         "point"?: PickupPoint | null;
+        /**
+          * The currently selected pickup point ID
+         */
+        "pointName"?: string | null;
+        /**
+          * The currently selected pickup point type
+         */
+        "pointProvider"?: Provider | null;
         /**
           * The price of DHL pickup points
          */
@@ -189,14 +202,6 @@ declare namespace LocalJSX {
           * The providers to search for pickup points
          */
         "providers"?: Provider[] | Provider;
-        /**
-          * The currently selected pickup point ID
-         */
-        "selectedPoint"?: string | null;
-        /**
-          * The currently selected pickup point type
-         */
-        "selectedProvider"?: Provider | null;
         /**
           * The theme of the selector
          */

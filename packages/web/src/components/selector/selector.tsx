@@ -1,4 +1,14 @@
-import { Component, Prop, State, Event, type EventEmitter, Watch, h, VNode } from '@stencil/core';
+import {
+    Component,
+    Prop,
+    State,
+    Event,
+    type EventEmitter,
+    Watch,
+    h,
+    VNode,
+    Method,
+} from '@stencil/core';
 import { findNearestPoints, PickupPoint, Provider } from '@paczkoapi/client';
 import { parseProviders, PROVIDERS } from '@paczkoapi/common';
 import { formatLength } from '@nzyme/utils';
@@ -8,6 +18,7 @@ import InpostLogo from '../../assets/inpost.svg';
 import DhlLogo from '../../assets/dhl.svg';
 import { openInpostMap } from 'src/utils/openInpostMap';
 import { openDhlMap } from 'src/utils/openDhlMap';
+import debounce from 'lodash.debounce';
 
 @Component({
     tag: 'paczkoapi-selector',
@@ -30,19 +41,19 @@ export class PaczkoapiSelector {
     /**
      * The city to search for pickup points
      */
-    @Prop()
+    @Prop({ mutable: true })
     addressCity: string | null = null;
 
     /**
      * The postal code to search for pickup points
      */
-    @Prop()
+    @Prop({ mutable: true })
     addressPostalCode: string | null = null;
 
     /**
      * The street to search for pickup points
      */
-    @Prop()
+    @Prop({ mutable: true })
     addressStreet: string | null = null;
 
     /**
@@ -73,13 +84,13 @@ export class PaczkoapiSelector {
      * The currently selected pickup point ID
      */
     @Prop({ mutable: true })
-    selectedPoint: string | null = null;
+    pointName: string | null = null;
 
     /**
      * The currently selected pickup point type
      */
     @Prop({ mutable: true })
-    selectedProvider: Provider | null = null;
+    pointProvider: Provider | null = null;
 
     /**
      * The currently selected pickup point
@@ -93,16 +104,40 @@ export class PaczkoapiSelector {
      * Event emitted when a pickup point is selected
      */
     @Event()
-    selected!: EventEmitter<PickupPoint>;
+    pointSelected!: EventEmitter<PickupPoint>;
 
     @State() nearestPoints: PickupPoint[] = [];
     @State() mapPoints: Partial<Record<Provider, PickupPoint | undefined>> = {};
     @State() isLoading = false;
     @State() error: string | null = null;
 
+    /**
+     * Set the address of the selector
+     */
+    @Method()
+    async setAddress(address: { city?: string; postalCode?: string; street?: string }) {
+        this.addressCity = address.city ?? null;
+        this.addressPostalCode = address.postalCode ?? null;
+        this.addressStreet = address.street ?? null;
+
+        void this.fetchDebounced();
+        await this.fetchDebounced.flush();
+    }
+
+    @Method()
+    async selectPoint(provider: Provider, id: string) {
+        this.pointName = id;
+        this.pointProvider = provider;
+    }
+
     private abortController: AbortController | null = null;
     private _providers: Provider[] = [];
     private _point: PickupPoint | null = null;
+
+    private fetchDebounced = debounce(this.fetchPickupPoints, 1000, {
+        leading: true,
+        trailing: true,
+    });
 
     private get providersAvailable(): readonly Provider[] {
         if (!this._providers.length) {
@@ -117,12 +152,12 @@ export class PaczkoapiSelector {
     @Watch('addressStreet')
     @Watch('limit')
     @Watch('providers')
-    async onSearchParamsChange() {
-        await this.fetchPickupPoints();
+    onSearchParamsChange() {
+        void this.fetchDebounced();
     }
 
     componentWillLoad() {
-        this.fetchPickupPoints();
+        void this.fetchDebounced();
     }
 
     disconnectedCallback() {
@@ -155,6 +190,7 @@ export class PaczkoapiSelector {
 
             this.abortController = null;
             this.nearestPoints = points;
+            this.selectFirstPoint();
         } catch (err) {
             if (err instanceof Error && err.name !== 'AbortError') {
                 this.error = err.message;
@@ -168,6 +204,22 @@ export class PaczkoapiSelector {
         }
     }
 
+    private selectFirstPoint() {
+        const current = this.point;
+        if (current) {
+            const currentMap = this.mapPoints[current.provider];
+            if (currentMap?.id === current.id) {
+                // Point was selected from map
+                return;
+            }
+        }
+
+        const first = this.nearestPoints[0];
+        if (first) {
+            this.handlePointSelection(first);
+        }
+    }
+
     private cancelFetch() {
         if (this.abortController) {
             this.abortController.abort('Canceled by user');
@@ -176,7 +228,7 @@ export class PaczkoapiSelector {
     }
 
     private isSelected(point: PickupPoint) {
-        return this.selectedProvider === point.type && this.selectedPoint === point.id;
+        return this.pointProvider === point.provider && this.pointName === point.id;
     }
 
     render() {
@@ -195,14 +247,14 @@ export class PaczkoapiSelector {
     }
 
     private renderPoint(point: PickupPoint, children?: VNode[]) {
-        const index = `${point.type}-${point.id.toLowerCase()}`;
+        const index = `${point.provider}-${point.id.toLowerCase()}`;
 
         return (
             <label class={this.isSelected(point) ? 'selected' : ''}>
                 <input
                     type="radio"
                     name="pickup-point"
-                    value={`${point.type}:${point.id}`}
+                    value={`${point.provider}:${point.id}`}
                     class="input"
                     checked={this.isSelected(point)}
                     onChange={() => this.handlePointSelection(point)}
@@ -232,7 +284,7 @@ export class PaczkoapiSelector {
                         )}
                         {children}
                     </div>
-                    {this.renderRight(point.type)}
+                    {this.renderRight(point.provider)}
                 </div>
             </label>
         );
@@ -299,10 +351,10 @@ export class PaczkoapiSelector {
     }
 
     private handlePointSelection(point: PickupPoint) {
-        this.selectedPoint = point.id;
-        this.selectedProvider = point.type;
+        this.pointName = point.id;
+        this.pointProvider = point.provider;
         this._point = point;
-        this.selected.emit(point);
+        this.pointSelected.emit(point);
     }
 
     private async handleMapSelection(provider: Provider) {
@@ -311,7 +363,7 @@ export class PaczkoapiSelector {
         if (point) {
             this.handlePointSelection(point);
             const existing = this.nearestPoints.find(
-                p => p.id === point.id && p.type === point.type,
+                p => p.id === point.id && p.provider === point.provider,
             );
             if (existing) {
                 // If the point is already in the nearest points, remove it from the map points
@@ -334,7 +386,7 @@ export class PaczkoapiSelector {
 
     private getPointName(point: PickupPoint) {
         if (this.providers.length === 1) {
-            switch (point.type) {
+            switch (point.provider) {
                 case 'inpost':
                     return `${point.address}`;
                 case 'dhl':
@@ -344,7 +396,7 @@ export class PaczkoapiSelector {
             }
         }
 
-        return this.getProviderName(point.type) || point.name;
+        return this.getProviderName(point.provider) || point.name;
     }
 
     private getProviderName(provider: Provider) {
@@ -358,7 +410,7 @@ export class PaczkoapiSelector {
 
     private getPointAddress(point: PickupPoint) {
         if (this.providers.length === 1) {
-            switch (point.type) {
+            switch (point.provider) {
                 case 'inpost':
                     return `${point.name}, ${point.city}`;
                 case 'dhl':

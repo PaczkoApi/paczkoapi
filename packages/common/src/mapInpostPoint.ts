@@ -18,7 +18,7 @@ export function mapInpostPoint(point: InpostPointData): PickupPoint {
     }
 
     return {
-        type: 'inpost',
+        provider: 'inpost',
         id,
         name: point.name,
         city,

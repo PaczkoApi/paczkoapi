@@ -23,7 +23,4 @@ export const config: Config = {
     },
     buildDist: true,
     plugins: [sass()],
-    devServer: {
-        openBrowser: false,
-    },
 };

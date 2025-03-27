@@ -8,7 +8,7 @@ export interface PickupPoint {
     /**
      * Type of the pickup point
      */
-    type: Provider;
+    provider: Provider;
 
     /**
      * ID of the pickup point
