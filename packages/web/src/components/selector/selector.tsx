@@ -7,6 +7,7 @@ import { formatMoney } from '@nzyme/money';
 import InpostLogo from '../../assets/inpost.svg';
 import DhlLogo from '../../assets/dhl.svg';
 import { openInpostMap } from 'src/utils/openInpostMap';
+import { openDhlMap } from 'src/utils/openDhlMap';
 
 @Component({
     tag: 'paczkoapi-selector',
@@ -245,7 +246,7 @@ export class PaczkoapiSelector {
                     class="change"
                     onClick={() => this.handleMapSelection(provider)}
                 >
-                    Zmień
+                    Wybierz inny z&nbsp;mapy
                 </button>
             );
             return this.renderPoint(point, change);
@@ -327,7 +328,7 @@ export class PaczkoapiSelector {
             case 'inpost':
                 return await openInpostMap();
             case 'dhl':
-                break;
+                return await openDhlMap();
         }
     }
 
