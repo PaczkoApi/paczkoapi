@@ -1,5 +1,0 @@
-src/
-!*.stories.tsx
-dist/
-
-*storybook.log

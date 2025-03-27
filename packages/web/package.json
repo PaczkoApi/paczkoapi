@@ -1,5 +1,5 @@
 {
-    "name": "@paczkoapi/stencil",
+    "name": "@paczkoapi/web",
     "version": "0.1.0",
     "main": "dist/index.cjs.js",
     "module": "dist/index.js",
