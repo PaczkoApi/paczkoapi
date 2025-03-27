@@ -23,7 +23,6 @@ export const config: Config = {
     },
     buildDist: true,
     plugins: [sass()],
-    globalStyle: 'src/theme.scss',
     devServer: {
         openBrowser: false,
     },

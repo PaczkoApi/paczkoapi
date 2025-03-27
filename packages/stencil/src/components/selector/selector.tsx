@@ -56,6 +56,11 @@ export class PaczkoapiSelector {
     @Prop() limit: number = 5;
 
     /**
+     * The theme of the selector
+     */
+    @Prop() theme: 'border' | 'default' = 'default';
+
+    /**
      * The currently selected pickup point ID
      */
     @Prop({ mutable: true }) selectedPoint: string | null = null;
@@ -133,6 +138,7 @@ export class PaczkoapiSelector {
 
     private handleSelection = (point: PickupPoint) => {
         this.selectedPoint = point.id;
+        this.selectedProvider = point.type;
         this.pointSelected.emit(point);
     };
 
@@ -195,23 +201,27 @@ export class PaczkoapiSelector {
         }
     }
 
+    private isSelected(point: PickupPoint) {
+        return this.selectedProvider === point.type && this.selectedPoint === point.id;
+    }
+
     render() {
         return (
-            <fieldset role="radiogroup">
+            <fieldset
+                role="radiogroup"
+                class={`theme_${this.theme}`}
+            >
                 {this.pickupPoints.map((point, index) => {
                     const price = this.getPointPrice(point);
 
                     return (
-                        <label>
+                        <label class={this.isSelected(point) ? 'selected' : ''}>
                             <input
                                 type="radio"
                                 name="pickup-point"
                                 value={`${point.type}:${point.id}`}
                                 class="input"
-                                checked={
-                                    this.selectedProvider === point.type &&
-                                    this.selectedPoint === point.id
-                                }
+                                checked={this.isSelected(point)}
                                 onChange={() => this.handleSelection(point)}
                                 aria-labelledby={`point-name-${index}`}
                                 aria-describedby={`point-address-${index}`}

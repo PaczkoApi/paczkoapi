@@ -51,3 +51,14 @@ export const Dhl: StoryObj<Components.PaczkoapiSelector> = {
         priceDhl: 15_00,
     },
 };
+
+export const BorderTheme: StoryObj<Components.PaczkoapiSelector> = {
+    args: {
+        addressStreet: 'ul. Wspólna 67',
+        addressCity: 'Warszawa',
+        addressPostalCode: '00-687',
+        priceInpost: 10_00,
+        priceDhl: 15_00,
+        theme: 'border',
+    },
+};

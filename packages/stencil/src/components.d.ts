@@ -59,6 +59,10 @@ export namespace Components {
           * The currently selected pickup point type
          */
         "selectedProvider": Provider | null;
+        /**
+          * The theme of the selector
+         */
+        "theme": 'border' | 'default';
     }
 }
 export interface PaczkoapiSelectorCustomEvent<T> extends CustomEvent<T> {
@@ -150,6 +154,10 @@ declare namespace LocalJSX {
           * The currently selected pickup point type
          */
         "selectedProvider"?: Provider | null;
+        /**
+          * The theme of the selector
+         */
+        "theme"?: 'border' | 'default';
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
