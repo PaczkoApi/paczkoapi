@@ -1,36 +1,35 @@
 {
     "name": "@paczkoapi/web",
     "version": "0.2.0",
-    "main": "dist/index.cjs.js",
-    "module": "dist/index.js",
-    "types": "dist/types/index.d.ts",
-    "collection": "dist/collection/collection-manifest.json",
-    "collection:main": "dist/collection/index.js",
-    "unpkg": "dist/lib/lib.esm.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/paczkoapi/paczkoapi.git"
+    },
+    "license": "MIT",
     "exports": {
         ".": {
             "import": "./dist/lib/lib.esm.js",
             "require": "./dist/lib/lib.lib.js"
         }
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/paczkoapi/paczkoapi.git"
-    },
+    "main": "dist/index.cjs.js",
+    "unpkg": "dist/lib/lib.esm.js",
+    "module": "dist/index.js",
+    "types": "dist/types/index.d.ts",
     "files": [
         "dist/",
         "loader/"
     ],
     "scripts": {
         "build": "stencil build",
-        "watch": "stencil build --watch --dev --config stencil.config.dev.ts",
-        "serve": "stencil build --watch --dev --serve --config stencil.config.serve.ts",
+        "build-storybook": "storybook build",
         "dev": "storybook dev -p 6006 --no-open",
+        "generate": "stencil generate",
+        "serve": "stencil build --watch --dev --serve --config stencil.config.serve.ts",
+        "storybook": "storybook dev -p 6006",
         "test": "stencil test --spec --e2e",
         "test.watch": "stencil test --spec --e2e --watchAll",
-        "generate": "stencil generate",
-        "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "watch": "stencil build --watch --dev --config stencil.config.dev.ts"
     },
     "dependencies": {
         "@nzyme/apis": "^0.9.0",
@@ -63,5 +62,9 @@
         "storybook": "^8.6.10",
         "vite": "^6.2.3"
     },
-    "license": "MIT"
+    "publishConfig": {
+        "access": "public"
+    },
+    "collection": "dist/collection/collection-manifest.json",
+    "collection:main": "dist/collection/index.js"
 }

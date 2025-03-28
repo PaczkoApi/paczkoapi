@@ -1,24 +1,26 @@
+import type { PickupPoint, Provider } from '@paczkoapi/client';
+import { findNearestPoints } from '@paczkoapi/client';
+import { PROVIDERS, parseProviders } from '@paczkoapi/common';
 import {
     Component,
-    Prop,
-    State,
     Event,
     type EventEmitter,
+    Method,
+    Prop,
+    State,
+    type VNode,
     Watch,
     h,
-    VNode,
-    Method,
 } from '@stencil/core';
-import { findNearestPoints, PickupPoint, Provider } from '@paczkoapi/client';
-import { parseProviders, PROVIDERS } from '@paczkoapi/common';
-import { formatLength } from '@nzyme/utils';
-
-import InpostLogo from '../../assets/inpost.svg';
-import DhlLogo from '../../assets/dhl.svg';
-import { openInpostMap } from 'src/utils/openInpostMap';
-import { openDhlMap } from 'src/utils/openDhlMap';
 import debounce from 'lodash.debounce';
 import { formatMoney } from 'src/utils/formatMoney';
+import { openDhlMap } from 'src/utils/openDhlMap';
+import { openInpostMap } from 'src/utils/openInpostMap';
+
+import { formatLength } from '@nzyme/utils';
+
+import DhlLogo from '../../assets/dhl.svg';
+import InpostLogo from '../../assets/inpost.svg';
 
 @Component({
     tag: 'paczkoapi-selector',
@@ -128,13 +130,14 @@ export class PaczkoapiSelector {
     async selectPoint(provider: Provider, id: string) {
         this.pointName = id;
         this.pointProvider = provider;
+        await Promise.resolve();
     }
 
     private abortController: AbortController | null = null;
     private _providers: Provider[] = [];
     private _point: PickupPoint | null = null;
 
-    private fetchDebounced = debounce(this.fetchPickupPoints, 1000, {
+    private fetchDebounced = debounce(() => this.fetchPickupPoints(), 1000, {
         leading: true,
         trailing: true,
     });
@@ -246,7 +249,7 @@ export class PaczkoapiSelector {
         );
     }
 
-    private renderPoint(point: PickupPoint, children?: VNode[]) {
+    private renderPoint(point: PickupPoint, children?: VNode[] | VNode) {
         const index = `${point.provider}-${point.id.toLowerCase()}`;
 
         return (
@@ -296,7 +299,7 @@ export class PaczkoapiSelector {
             const change = (
                 <button
                     class="change"
-                    onClick={() => this.handleMapSelection(provider)}
+                    onClick={() => void this.handleMapSelection(provider)}
                 >
                     Wybierz inny z&nbsp;mapy
                 </button>
@@ -306,7 +309,7 @@ export class PaczkoapiSelector {
 
         return (
             <label
-                onClick={() => this.handleMapSelection(provider)}
+                onClick={() => void this.handleMapSelection(provider)}
                 role="button"
             >
                 <span
