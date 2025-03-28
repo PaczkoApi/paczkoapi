@@ -23,7 +23,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/kedrzu/paczkoapi.git"
+        "url": "https://github.com/paczkoapi/paczkoapi.git"
     },
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",

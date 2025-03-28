@@ -133,15 +133,19 @@ label {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0;
         width: variable(radio-dot-size);
         height: variable(radio-dot-size);
         border-radius: 50%;
         background-color: variable(radio-dot-color-selected);
-        transition: transform variable(transition-duration) variable(transition-timing);
+        transition:
+            transform variable(transition-duration) variable(transition-timing),
+            opacity variable(transition-duration) variable(transition-timing);
 
         .selected & {
             transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
     }
 

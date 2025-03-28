@@ -15,6 +15,7 @@ coverage
 node_modules/
 
 # TypeScript cache
+.tsbuildinfo
 *.tsbuildinfo
 
 # Optional eslint cache
@@ -33,7 +34,6 @@ node_modules/
 .env
 .env.*
 
-
 # yarn v2
 .yarn/cache
 .yarn/unplugged
@@ -48,6 +48,6 @@ dist
 .nx
 .turbo
 .nzyme
-.tsbuildinfo
-Pulumi.yaml
-*storybook.log
+
+# not needed for lib and messes up monorepos
+yarn.lock

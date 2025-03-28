@@ -1,0 +1,27 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "extends": ["//"],
+    "tasks": {
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "watch": {
+            "cache": false,
+            "persistent": true
+        },
+        "build": {
+            "dependsOn": ["^build"],
+            "cache": true
+        },
+        "smoke:cjs": {
+            "cache": false,
+            "persistent": false
+        },
+        "smoke:mjs": {
+            "cache": false,
+            "persistent": false
+        }
+    },
+    "ui": "stream"
+}
