@@ -1,6 +1,6 @@
 {
     "name": "@paczkoapi/web",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/paczkoapi/paczkoapi.git"
@@ -35,7 +35,7 @@
         "@nzyme/apis": "^0.9.0",
         "@nzyme/dom-utils": "^0.9.0",
         "@nzyme/utils": "^0.9.0",
-        "@paczkoapi/client": "0.2.0",
+        "@paczkoapi/client": "0.2.1",
         "lodash.debounce": "^4.0.8"
     },
     "devDependencies": {
@@ -43,7 +43,7 @@
         "@nzyme/eslint": "^0.9.0",
         "@nzyme/project-utils": "^0.9.0",
         "@nzyme/tsconfig": "^0.9.0",
-        "@paczkoapi/common": "0.2.0",
+        "@paczkoapi/common": "0.2.1",
         "@stencil/core": "^4.28.2",
         "@stencil/sass": "^3.2.0",
         "@storybook/addon-essentials": "^8.6.10",

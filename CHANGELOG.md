@@ -1,3 +1,13 @@
+## 0.2.1 (2025-03-28)
+
+### 🩹 Fixes
+
+- release config ([c7608df](https://github.com/PaczkoApi/paczkoapi/commit/c7608df))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.2.0 (2025-03-28)
 
 ### 🚀 Features
