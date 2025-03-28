@@ -12,13 +12,13 @@ import {
 import { findNearestPoints, PickupPoint, Provider } from '@paczkoapi/client';
 import { parseProviders, PROVIDERS } from '@paczkoapi/common';
 import { formatLength } from '@nzyme/utils';
-import { formatMoney } from '@nzyme/money';
 
 import InpostLogo from '../../assets/inpost.svg';
 import DhlLogo from '../../assets/dhl.svg';
 import { openInpostMap } from 'src/utils/openInpostMap';
 import { openDhlMap } from 'src/utils/openDhlMap';
 import debounce from 'lodash.debounce';
+import { formatMoney } from 'src/utils/formatMoney';
 
 @Component({
     tag: 'paczkoapi-selector',
@@ -337,7 +337,7 @@ export class PaczkoapiSelector {
 
         return (
             <div class="price-provider">
-                {price && <span class="price">{formatMoney([price, 'PLN'])}</span>}
+                {price && <span class="price">{formatMoney(price)}</span>}
 
                 {logo && (
                     <img

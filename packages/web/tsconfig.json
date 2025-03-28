@@ -6,7 +6,7 @@
         "composite": false,
         "declaration": false,
         "experimentalDecorators": true,
-        "lib": ["dom", "es2022"],
+        "lib": ["DOM", "ESNext"],
         "moduleResolution": "bundler",
         "module": "esnext",
         "target": "es2022",

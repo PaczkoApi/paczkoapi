@@ -35,7 +35,6 @@
     "dependencies": {
         "@nzyme/apis": "^0.9.0",
         "@nzyme/dom-utils": "^0.9.0",
-        "@nzyme/money": "^0.9.0",
         "@nzyme/utils": "^0.9.0",
         "@paczkoapi/client": "0.1.0",
         "lodash.debounce": "^4.0.8"
