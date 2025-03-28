@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { Components } from '../../components';
+
+import type { Components } from '../../components';
 
 const meta: Meta<Components.PaczkoapiSelector> = {
     title: 'Point selector',
