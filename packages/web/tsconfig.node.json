@@ -1,0 +1,9 @@
+{
+    "extends": "@nzyme/tsconfig/esm.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "noEmit": true
+    },
+    "include": [".storybook/*.ts", "stencil.config.ts", "stencil.config.*.ts"],
+    "exclude": ["node_modules"]
+}
