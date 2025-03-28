@@ -11,6 +11,12 @@ on:
         required: false
         type: boolean
         default: false
+      first_release:
+        description: 'First release'
+        required: false
+        type: boolean
+        default: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -45,14 +51,7 @@ jobs:
       - run: yarn test
       - run: yarn smoke
 
-      - run: yarn release
-        if: ${{ inputs.dry_run != true }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - run: yarn release --dry-run
-        if: ${{ inputs.dry_run }}
+      - run: yarn release ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.first_release && '--first-release' || '' }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
