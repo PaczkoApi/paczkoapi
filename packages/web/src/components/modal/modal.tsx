@@ -1,12 +1,13 @@
+import { Component, Event, type EventEmitter, Prop, h } from '@stencil/core';
+
 import { lockBodyScroll } from '@nzyme/dom-utils';
-import { Component, Prop, Event, type EventEmitter, h } from '@stencil/core';
 
 @Component({
     tag: 'paczkoapi-modal',
     styleUrl: './modal.scss',
     shadow: true,
 })
-export class PaczkoapiMap {
+export class PaczkoapiModal {
     /**
      * The title of the map
      */

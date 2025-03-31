@@ -11,6 +11,11 @@
             "import": "./dist/lib/lib.esm.js",
             "require": "./dist/lib/lib.cjs.js"
         },
+        "./components/*": {
+            "import": "./dist/components/*.js",
+            "types": "./dist/components/*.d.ts",
+            "default": "./dist/components/*.js"
+        },
         "./loader": {
             "import": "./dist/loader/index.js",
             "require": "./dist/loader/index.cjs.js",
@@ -41,6 +46,7 @@
         "@nzyme/dom-utils": "^0.9.0",
         "@nzyme/utils": "^0.9.0",
         "@paczkoapi/client": "0.2.1",
+        "@stencil/core": "^4.28.2",
         "lodash.debounce": "^4.0.8"
     },
     "devDependencies": {
@@ -49,7 +55,6 @@
         "@nzyme/project-utils": "^0.9.0",
         "@nzyme/tsconfig": "^0.9.0",
         "@paczkoapi/common": "0.2.1",
-        "@stencil/core": "^4.28.2",
         "@stencil/sass": "^3.2.0",
         "@storybook/addon-essentials": "^8.6.11",
         "@storybook/addon-events": "^6.2.9",

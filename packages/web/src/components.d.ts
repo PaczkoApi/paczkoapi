@@ -8,8 +8,6 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PickupPoint, Provider } from "@paczkoapi/client";
 export { PickupPoint, Provider } from "@paczkoapi/client";
 export namespace Components {
-    interface PaczkoapiMapInpost {
-    }
     interface PaczkoapiModal {
         /**
           * The title of the map
@@ -69,10 +67,6 @@ export namespace Components {
         "theme": 'border' | 'default';
     }
 }
-export interface PaczkoapiMapInpostCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLPaczkoapiMapInpostElement;
-}
 export interface PaczkoapiModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPaczkoapiModalElement;
@@ -82,23 +76,6 @@ export interface PaczkoapiSelectorCustomEvent<T> extends CustomEvent<T> {
     target: HTMLPaczkoapiSelectorElement;
 }
 declare global {
-    interface HTMLPaczkoapiMapInpostElementEventMap {
-        "close": void;
-    }
-    interface HTMLPaczkoapiMapInpostElement extends Components.PaczkoapiMapInpost, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLPaczkoapiMapInpostElement: {
-        prototype: HTMLPaczkoapiMapInpostElement;
-        new (): HTMLPaczkoapiMapInpostElement;
-    };
     interface HTMLPaczkoapiModalElementEventMap {
         "close": void;
     }
@@ -134,18 +111,11 @@ declare global {
         new (): HTMLPaczkoapiSelectorElement;
     };
     interface HTMLElementTagNameMap {
-        "paczkoapi-map-inpost": HTMLPaczkoapiMapInpostElement;
         "paczkoapi-modal": HTMLPaczkoapiModalElement;
         "paczkoapi-selector": HTMLPaczkoapiSelectorElement;
     }
 }
 declare namespace LocalJSX {
-    interface PaczkoapiMapInpost {
-        /**
-          * Event emitted when modal is closed
-         */
-        "onClose"?: (event: PaczkoapiMapInpostCustomEvent<void>) => void;
-    }
     interface PaczkoapiModal {
         /**
           * The title of the map
@@ -208,7 +178,6 @@ declare namespace LocalJSX {
         "theme"?: 'border' | 'default';
     }
     interface IntrinsicElements {
-        "paczkoapi-map-inpost": PaczkoapiMapInpost;
         "paczkoapi-modal": PaczkoapiModal;
         "paczkoapi-selector": PaczkoapiSelector;
     }
@@ -217,7 +186,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "paczkoapi-map-inpost": LocalJSX.PaczkoapiMapInpost & JSXBase.HTMLAttributes<HTMLPaczkoapiMapInpostElement>;
             "paczkoapi-modal": LocalJSX.PaczkoapiModal & JSXBase.HTMLAttributes<HTMLPaczkoapiModalElement>;
             "paczkoapi-selector": LocalJSX.PaczkoapiSelector & JSXBase.HTMLAttributes<HTMLPaczkoapiSelectorElement>;
         }
