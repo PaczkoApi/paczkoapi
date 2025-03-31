@@ -7,7 +7,8 @@
     "license": "MIT",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "examples/*"
     ],
     "scripts": {
         "build": "yarn build:esm && yarn build:cjs && yarn build:turbo",
