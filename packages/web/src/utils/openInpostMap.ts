@@ -1,8 +1,9 @@
+import type { PickupPoint } from '@paczkoapi/client';
+import { mapInpostPoint } from '@paczkoapi/common';
+
+import type { InpostPointData } from '@nzyme/apis/inpost';
 import { loadScript, loadStyles, onHistoryBack } from '@nzyme/dom-utils';
 import { assertValue, createPromise } from '@nzyme/utils';
-import { PickupPoint } from '@paczkoapi/client';
-import type { InpostPointData } from '@nzyme/apis/inpost';
-import { mapInpostPoint } from '@paczkoapi/common';
 
 interface EasyPackApi {
     init(params: EasyPackInitParams): void;
@@ -73,7 +74,7 @@ export async function openInpostMap(location?: { latitude: number; longitude: nu
         resolve(mapInpostPoint(point));
     });
 
-    promise.finally(() => {
+    void promise.finally(() => {
         document.body.removeChild(modal);
         backHandle.cancel();
     });

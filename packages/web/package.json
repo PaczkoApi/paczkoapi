@@ -9,16 +9,26 @@
     "exports": {
         ".": {
             "import": "./dist/lib/lib.esm.js",
-            "require": "./dist/lib/lib.lib.js"
+            "require": "./dist/lib/lib.cjs.js"
+        },
+        "./components/*": {
+            "import": "./dist/components/*.js",
+            "types": "./dist/components/*.d.ts",
+            "default": "./dist/components/*.js"
+        },
+        "./loader": {
+            "import": "./dist/loader/index.js",
+            "require": "./dist/loader/index.cjs.js",
+            "types": "./dist/loader/index.d.ts",
+            "default": "./dist/loader/index.js"
         }
     },
     "main": "dist/index.cjs.js",
     "unpkg": "dist/lib/lib.esm.js",
-    "module": "dist/index.js",
+    "module": "dist/lib/lib.esm.js",
     "types": "dist/types/index.d.ts",
     "files": [
-        "dist/",
-        "loader/"
+        "dist/"
     ],
     "scripts": {
         "build": "stencil build",
@@ -29,13 +39,14 @@
         "storybook": "storybook dev -p 6006",
         "test": "stencil test --spec --e2e",
         "test.watch": "stencil test --spec --e2e --watchAll",
-        "watch": "stencil build --watch --dev --config stencil.config.dev.ts"
+        "watch": "stencil build --watch --config stencil.config.dev.ts"
     },
     "dependencies": {
         "@nzyme/apis": "^0.9.0",
         "@nzyme/dom-utils": "^0.9.0",
         "@nzyme/utils": "^0.9.0",
         "@paczkoapi/client": "0.2.1",
+        "@stencil/core": "^4.28.2",
         "lodash.debounce": "^4.0.8"
     },
     "devDependencies": {
@@ -44,14 +55,13 @@
         "@nzyme/project-utils": "^0.9.0",
         "@nzyme/tsconfig": "^0.9.0",
         "@paczkoapi/common": "0.2.1",
-        "@stencil/core": "^4.28.2",
         "@stencil/sass": "^3.2.0",
-        "@storybook/addon-essentials": "^8.6.10",
+        "@storybook/addon-essentials": "^8.6.11",
         "@storybook/addon-events": "^6.2.9",
-        "@storybook/blocks": "^8.6.10",
-        "@storybook/test": "^8.6.10",
-        "@storybook/web-components": "^8.6.10",
-        "@storybook/web-components-vite": "^8.6.10",
+        "@storybook/blocks": "^8.6.11",
+        "@storybook/test": "^8.6.11",
+        "@storybook/web-components": "^8.6.11",
+        "@storybook/web-components-vite": "^8.6.11",
         "@types/jest": "^29.5.14",
         "@types/lodash.debounce": "^4.0.9",
         "@types/node": "^22.13.14",
@@ -59,7 +69,7 @@
         "jest-cli": "^29.7.0",
         "lit": "^3.2.1",
         "puppeteer": "^24.4.0",
-        "storybook": "^8.6.10",
+        "storybook": "^8.6.11",
         "vite": "^6.2.3"
     },
     "publishConfig": {

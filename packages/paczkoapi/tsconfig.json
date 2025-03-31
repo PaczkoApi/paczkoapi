@@ -1,0 +1,12 @@
+{
+    "extends": "@nzyme/tsconfig/esm.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "declarationDir": "./dist",
+        "lib": ["ESNext", "DOM"],
+        "composite": false
+    },
+    "include": ["src"],
+    "exclude": ["src/**/*.test.ts"]
+}

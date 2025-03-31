@@ -6,33 +6,37 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { PickupPoint, Provider } from "@paczkoapi/client";
+import { Address } from "@paczkoapi/common";
 export { PickupPoint, Provider } from "@paczkoapi/client";
+export { Address } from "@paczkoapi/common";
 export namespace Components {
-    interface PaczkoapiMapInpost {
-    }
     interface PaczkoapiModal {
         /**
           * The title of the map
          */
-        "modalTitle": string | null;
+        "modalTitle": string | null | undefined;
     }
     interface PaczkoapiSelector {
         /**
+          * The address to search for pickup points
+         */
+        "address": Address | null | undefined;
+        /**
           * The city to search for pickup points
          */
-        "addressCity": string | null;
+        "addressCity": string | null | undefined;
         /**
           * The postal code to search for pickup points
          */
-        "addressPostalCode": string | null;
+        "addressPostalCode": string | null | undefined;
         /**
           * The street to search for pickup points
          */
-        "addressStreet": string | null;
+        "addressStreet": string | null | undefined;
         /**
           * The limit of pickup points to fetch
          */
-        "limit": number;
+        "limit": number | null | undefined;
         /**
           * The currently selected pickup point
           * @readonly
@@ -41,19 +45,15 @@ export namespace Components {
         /**
           * The currently selected pickup point ID
          */
-        "pointName": string | null;
+        "pointName": string | null | undefined;
         /**
           * The currently selected pickup point type
          */
-        "pointProvider": Provider | null;
+        "pointProvider": Provider | null | undefined;
         /**
-          * The price of DHL pickup points
+          * The prices of pickup points
          */
-        "priceDhl": number | null;
-        /**
-          * The price of InPost pickup points
-         */
-        "priceInpost": number | null;
+        "prices": Partial<Record<Provider, number>> | null | undefined;
         /**
           * The providers to search for pickup points
          */
@@ -62,16 +62,12 @@ export namespace Components {
         /**
           * Set the address of the selector
          */
-        "setAddress": (address: { city?: string; postalCode?: string; street?: string; }) => Promise<void>;
+        "setAddress": (address: Address, forceFetch?: boolean) => Promise<void>;
         /**
           * The theme of the selector
          */
-        "theme": 'border' | 'default';
+        "theme": 'border' | null | undefined;
     }
-}
-export interface PaczkoapiMapInpostCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLPaczkoapiMapInpostElement;
 }
 export interface PaczkoapiModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -82,23 +78,6 @@ export interface PaczkoapiSelectorCustomEvent<T> extends CustomEvent<T> {
     target: HTMLPaczkoapiSelectorElement;
 }
 declare global {
-    interface HTMLPaczkoapiMapInpostElementEventMap {
-        "close": void;
-    }
-    interface HTMLPaczkoapiMapInpostElement extends Components.PaczkoapiMapInpost, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLPaczkoapiMapInpostElementEventMap>(type: K, listener: (this: HTMLPaczkoapiMapInpostElement, ev: PaczkoapiMapInpostCustomEvent<HTMLPaczkoapiMapInpostElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLPaczkoapiMapInpostElement: {
-        prototype: HTMLPaczkoapiMapInpostElement;
-        new (): HTMLPaczkoapiMapInpostElement;
-    };
     interface HTMLPaczkoapiModalElementEventMap {
         "close": void;
     }
@@ -117,7 +96,7 @@ declare global {
         new (): HTMLPaczkoapiModalElement;
     };
     interface HTMLPaczkoapiSelectorElementEventMap {
-        "pointSelected": PickupPoint;
+        "selected": PickupPoint;
     }
     interface HTMLPaczkoapiSelectorElement extends Components.PaczkoapiSelector, HTMLStencilElement {
         addEventListener<K extends keyof HTMLPaczkoapiSelectorElementEventMap>(type: K, listener: (this: HTMLPaczkoapiSelectorElement, ev: PaczkoapiSelectorCustomEvent<HTMLPaczkoapiSelectorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -134,23 +113,16 @@ declare global {
         new (): HTMLPaczkoapiSelectorElement;
     };
     interface HTMLElementTagNameMap {
-        "paczkoapi-map-inpost": HTMLPaczkoapiMapInpostElement;
         "paczkoapi-modal": HTMLPaczkoapiModalElement;
         "paczkoapi-selector": HTMLPaczkoapiSelectorElement;
     }
 }
 declare namespace LocalJSX {
-    interface PaczkoapiMapInpost {
-        /**
-          * Event emitted when modal is closed
-         */
-        "onClose"?: (event: PaczkoapiMapInpostCustomEvent<void>) => void;
-    }
     interface PaczkoapiModal {
         /**
           * The title of the map
          */
-        "modalTitle"?: string | null;
+        "modalTitle"?: string | null | undefined;
         /**
           * Event emitted when modal is closed
          */
@@ -158,25 +130,29 @@ declare namespace LocalJSX {
     }
     interface PaczkoapiSelector {
         /**
+          * The address to search for pickup points
+         */
+        "address"?: Address | null | undefined;
+        /**
           * The city to search for pickup points
          */
-        "addressCity"?: string | null;
+        "addressCity"?: string | null | undefined;
         /**
           * The postal code to search for pickup points
          */
-        "addressPostalCode"?: string | null;
+        "addressPostalCode"?: string | null | undefined;
         /**
           * The street to search for pickup points
          */
-        "addressStreet"?: string | null;
+        "addressStreet"?: string | null | undefined;
         /**
           * The limit of pickup points to fetch
          */
-        "limit"?: number;
+        "limit"?: number | null | undefined;
         /**
           * Event emitted when a pickup point is selected
          */
-        "onPointSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
+        "onSelected"?: (event: PaczkoapiSelectorCustomEvent<PickupPoint>) => void;
         /**
           * The currently selected pickup point
           * @readonly
@@ -185,19 +161,15 @@ declare namespace LocalJSX {
         /**
           * The currently selected pickup point ID
          */
-        "pointName"?: string | null;
+        "pointName"?: string | null | undefined;
         /**
           * The currently selected pickup point type
          */
-        "pointProvider"?: Provider | null;
+        "pointProvider"?: Provider | null | undefined;
         /**
-          * The price of DHL pickup points
+          * The prices of pickup points
          */
-        "priceDhl"?: number | null;
-        /**
-          * The price of InPost pickup points
-         */
-        "priceInpost"?: number | null;
+        "prices"?: Partial<Record<Provider, number>> | null | undefined;
         /**
           * The providers to search for pickup points
          */
@@ -205,10 +177,9 @@ declare namespace LocalJSX {
         /**
           * The theme of the selector
          */
-        "theme"?: 'border' | 'default';
+        "theme"?: 'border' | null | undefined;
     }
     interface IntrinsicElements {
-        "paczkoapi-map-inpost": PaczkoapiMapInpost;
         "paczkoapi-modal": PaczkoapiModal;
         "paczkoapi-selector": PaczkoapiSelector;
     }
@@ -217,7 +188,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "paczkoapi-map-inpost": LocalJSX.PaczkoapiMapInpost & JSXBase.HTMLAttributes<HTMLPaczkoapiMapInpostElement>;
             "paczkoapi-modal": LocalJSX.PaczkoapiModal & JSXBase.HTMLAttributes<HTMLPaczkoapiModalElement>;
             "paczkoapi-selector": LocalJSX.PaczkoapiSelector & JSXBase.HTMLAttributes<HTMLPaczkoapiSelectorElement>;
         }

@@ -41,7 +41,7 @@ export interface FindNearestPointsInput {
      * @example 10
      * @default 5
      */
-    limit?: number;
+    limit?: number | null;
 
     /**
      * Abort signal

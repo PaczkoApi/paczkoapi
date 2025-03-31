@@ -1,5 +1,6 @@
 import type { PickupPoint, Provider } from '@paczkoapi/client';
 import { findNearestPoints } from '@paczkoapi/client';
+import type { Address } from '@paczkoapi/common';
 import { PROVIDERS, parseProviders } from '@paczkoapi/common';
 import {
     Component,
@@ -43,56 +44,83 @@ export class PaczkoapiSelector {
     /**
      * The city to search for pickup points
      */
-    @Prop({ mutable: true })
-    addressCity: string | null = null;
+    @Prop()
+    get addressCity(): string | null | undefined {
+        return this.address?.city;
+    }
+
+    set addressCity(value: string | null | undefined) {
+        this.address = {
+            ...this.address,
+            city: value,
+        };
+    }
 
     /**
      * The postal code to search for pickup points
      */
-    @Prop({ mutable: true })
-    addressPostalCode: string | null = null;
+    @Prop()
+    get addressPostalCode(): string | null | undefined {
+        return this.address?.postalCode;
+    }
+
+    set addressPostalCode(value: string | null | undefined) {
+        this.address = {
+            ...this.address,
+            postalCode: value,
+        };
+    }
 
     /**
      * The street to search for pickup points
      */
+    @Prop()
+    get addressStreet(): string | null | undefined {
+        return this.address?.street;
+    }
+
+    set addressStreet(value: string | null | undefined) {
+        this.address = {
+            ...this.address,
+            street: value,
+        };
+    }
+
+    /**
+     * The address to search for pickup points
+     */
     @Prop({ mutable: true })
-    addressStreet: string | null = null;
+    address: Address | null | undefined;
 
     /**
-     * The price of InPost pickup points
+     * The prices of pickup points
      */
     @Prop()
-    priceInpost: number | null = null;
-
-    /**
-     * The price of DHL pickup points
-     */
-    @Prop()
-    priceDhl: number | null = null;
+    prices: Partial<Record<Provider, number>> | null | undefined;
 
     /**
      * The limit of pickup points to fetch
      */
     @Prop()
-    limit: number = 5;
+    limit: number | null | undefined;
 
     /**
      * The theme of the selector
      */
     @Prop()
-    theme: 'border' | 'default' = 'default';
+    theme: 'border' | null | undefined;
 
     /**
      * The currently selected pickup point ID
      */
     @Prop({ mutable: true })
-    pointName: string | null = null;
+    pointName: string | null | undefined;
 
     /**
      * The currently selected pickup point type
      */
     @Prop({ mutable: true })
-    pointProvider: Provider | null = null;
+    pointProvider: Provider | null | undefined;
 
     /**
      * The currently selected pickup point
@@ -105,25 +133,29 @@ export class PaczkoapiSelector {
     /**
      * Event emitted when a pickup point is selected
      */
-    @Event()
-    pointSelected!: EventEmitter<PickupPoint>;
+    @Event({ composed: true })
+    selected!: EventEmitter<PickupPoint>;
 
-    @State() nearestPoints: PickupPoint[] = [];
-    @State() mapPoints: Partial<Record<Provider, PickupPoint | undefined>> = {};
-    @State() isLoading = false;
-    @State() error: string | null = null;
+    @State() nearestPoints: PickupPoint[] | undefined;
+    @State() mapPoints: Partial<Record<Provider, PickupPoint | undefined>> | undefined;
+    @State() isLoading: boolean | undefined;
+    @State() error: string | undefined;
 
     /**
      * Set the address of the selector
      */
     @Method()
-    async setAddress(address: { city?: string; postalCode?: string; street?: string }) {
+    async setAddress(address: Address, forceFetch = false) {
         this.addressCity = address.city ?? null;
         this.addressPostalCode = address.postalCode ?? null;
         this.addressStreet = address.street ?? null;
 
-        void this.fetchDebounced();
-        await this.fetchDebounced.flush();
+        if (forceFetch) {
+            void this.fetchDebounced();
+            await this.fetchDebounced.flush();
+        } else {
+            await this.fetchDebounced();
+        }
     }
 
     @Method()
@@ -150,9 +182,7 @@ export class PaczkoapiSelector {
         return this._providers;
     }
 
-    @Watch('addressCity')
-    @Watch('addressPostalCode')
-    @Watch('addressStreet')
+    @Watch('address')
     @Watch('limit')
     @Watch('providers')
     onSearchParamsChange() {
@@ -178,7 +208,7 @@ export class PaczkoapiSelector {
         }
 
         this.isLoading = true;
-        this.error = null;
+        this.error = undefined;
         this.abortController = new AbortController();
 
         try {
@@ -210,14 +240,14 @@ export class PaczkoapiSelector {
     private selectFirstPoint() {
         const current = this.point;
         if (current) {
-            const currentMap = this.mapPoints[current.provider];
+            const currentMap = this.mapPoints?.[current.provider];
             if (currentMap?.id === current.id) {
                 // Point was selected from map
                 return;
             }
         }
 
-        const first = this.nearestPoints[0];
+        const first = this.nearestPoints?.[0];
         if (first) {
             this.handlePointSelection(first);
         }
@@ -241,7 +271,7 @@ export class PaczkoapiSelector {
                 class={`theme_${this.theme}`}
             >
                 {/* Najbliższe punkty */}
-                {this.nearestPoints.map(point => this.renderPoint(point))}
+                {this.nearestPoints?.map(point => this.renderPoint(point))}
 
                 {/* Wybór punktu z mapy */}
                 {this.providersAvailable.map(provider => this.renderMap(provider))}
@@ -294,7 +324,7 @@ export class PaczkoapiSelector {
     }
 
     private renderMap(provider: Provider) {
-        const point = this.mapPoints[provider];
+        const point = this.mapPoints?.[provider];
         if (point) {
             const change = (
                 <button
@@ -357,7 +387,7 @@ export class PaczkoapiSelector {
         this.pointName = point.id;
         this.pointProvider = point.provider;
         this._point = point;
-        this.pointSelected.emit(point);
+        this.selected.emit(point);
     }
 
     private async handleMapSelection(provider: Provider) {
@@ -365,9 +395,13 @@ export class PaczkoapiSelector {
 
         if (point) {
             this.handlePointSelection(point);
-            const existing = this.nearestPoints.find(
+            const existing = this.nearestPoints?.find(
                 p => p.id === point.id && p.provider === point.provider,
             );
+            if (!this.mapPoints) {
+                this.mapPoints = {};
+            }
+
             if (existing) {
                 // If the point is already in the nearest points, remove it from the map points
                 delete this.mapPoints[provider];
@@ -425,14 +459,7 @@ export class PaczkoapiSelector {
     }
 
     private getPointPrice(provider: Provider) {
-        switch (provider) {
-            case 'inpost':
-                return this.priceInpost;
-            case 'dhl':
-                return this.priceDhl;
-            default:
-                return null;
-        }
+        return this.prices?.[provider] ?? null;
     }
 
     private getPointLogo(provider: Provider) {

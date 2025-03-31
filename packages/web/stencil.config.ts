@@ -1,4 +1,4 @@
-import { Config } from '@stencil/core';
+import type { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
 export const config: Config = {
@@ -6,12 +6,12 @@ export const config: Config = {
     outputTargets: [
         {
             type: 'dist',
-            esmLoaderPath: '../loader',
         },
         {
             type: 'dist-custom-elements',
-            customElementsExportBehavior: 'auto-define-custom-elements',
-            externalRuntime: false,
+            externalRuntime: true,
+            generateTypeDeclarations: true,
+            minify: false,
         },
         {
             type: 'docs-readme',
@@ -23,4 +23,5 @@ export const config: Config = {
     },
     buildDist: true,
     plugins: [sass()],
+    sourceMap: true,
 };

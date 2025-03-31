@@ -30,5 +30,5 @@ export function setApiUrl(url: string) {
  * Set the API URL to the local server
  */
 export function setApiLocal(port?: number) {
-    setApiUrl(`http://localhost:${port ?? 3000}`);
+    setApiUrl(`http://localhost:${port ?? 3001}`);
 }
