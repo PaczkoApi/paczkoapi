@@ -1,3 +1,17 @@
+## 0.4.0 (2025-03-31)
+
+### 🚀 Features
+
+- add basic example ([ab983d2](https://github.com/PaczkoApi/paczkoapi/commit/ab983d2))
+
+### 🩹 Fixes
+
+- fix release workflow ([ef12d42](https://github.com/PaczkoApi/paczkoapi/commit/ef12d42))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.3.1 (2025-03-31)
 
 ### 🩹 Fixes
