@@ -1,9 +1,11 @@
 import { createSelector } from './createSelector.js';
 
-window.paczkoapi = {
-    createSelector,
-    initialize,
-};
+if (typeof window !== 'undefined') {
+    window.paczkoapi = {
+        createSelector,
+        initialize,
+    };
+}
 
 export { createSelector };
 export type { Address, PickupPoint, Provider } from '@paczkoapi/common';

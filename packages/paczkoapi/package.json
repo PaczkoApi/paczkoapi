@@ -38,6 +38,16 @@
             }
         }
     },
+    "typesVersions": {
+        "*": {
+            ".": [
+                "./dist/index.d.ts"
+            ],
+            "./lazy": [
+                "./dist/index.lazy.d.ts"
+            ]
+        }
+    },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",

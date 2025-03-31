@@ -48,8 +48,8 @@ export default [options, optionsIife];
 
 function plugins() {
     return [
-        commonjs(),
         typescript(),
+        commonjs(),
         isProduction && terser(),
         isProduction && sourcemaps({}),
         nodeResolve({
