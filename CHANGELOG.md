@@ -1,3 +1,20 @@
+## 0.3.0 (2025-03-31)
+
+### 🚀 Features
+
+- add paczkoapi package ([3046c6b](https://github.com/PaczkoApi/paczkoapi/commit/3046c6b))
+- working on selector api ([00f47a7](https://github.com/PaczkoApi/paczkoapi/commit/00f47a7))
+- add release workflow ([83cf1dc](https://github.com/PaczkoApi/paczkoapi/commit/83cf1dc))
+
+### 🩹 Fixes
+
+- fix web component ([592c4b9](https://github.com/PaczkoApi/paczkoapi/commit/592c4b9))
+- rollup config ([c9f4635](https://github.com/PaczkoApi/paczkoapi/commit/c9f4635))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.2.1 (2025-03-28)
 
 ### 🩹 Fixes
