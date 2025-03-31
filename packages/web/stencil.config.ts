@@ -23,4 +23,5 @@ export const config: Config = {
     },
     buildDist: true,
     plugins: [sass()],
+    sourceMap: true,
 };

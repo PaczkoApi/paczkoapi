@@ -3,11 +3,10 @@
     "compilerOptions": {
         "rootDir": "./src",
         "outDir": "./dist",
+        "declarationDir": "./dist",
         "lib": ["ESNext", "DOM"],
-        "composite": false,
-        "noEmit": true,
-        "sourceMap": false
+        "composite": false
     },
-    "include": ["src", "rollup.config.ts"],
+    "include": ["src"],
     "exclude": ["src/**/*.test.ts"]
 }

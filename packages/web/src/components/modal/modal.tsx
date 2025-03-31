@@ -11,14 +11,14 @@ export class PaczkoapiModal {
     /**
      * The title of the map
      */
-    @Prop() modalTitle: string | null = null;
+    @Prop() modalTitle: string | null | undefined;
 
     /**
      * Event emitted when modal is closed
      */
     @Event() close!: EventEmitter<void>;
 
-    private lockScroll: (() => void) | null = null;
+    private lockScroll: (() => void) | undefined;
 
     componentWillLoad() {
         this.lockScroll = lockBodyScroll();

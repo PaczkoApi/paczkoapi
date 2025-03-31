@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property     | Attribute     | Description          | Type             | Default |
-| ------------ | ------------- | -------------------- | ---------------- | ------- |
-| `modalTitle` | `modal-title` | The title of the map | `null \| string` | `null`  |
+| Property     | Attribute     | Description          | Type                          | Default     |
+| ------------ | ------------- | -------------------- | ----------------------------- | ----------- |
+| `modalTitle` | `modal-title` | The title of the map | `null \| string \| undefined` | `undefined` |
 
 
 ## Events

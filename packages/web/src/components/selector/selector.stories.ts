@@ -20,8 +20,10 @@ export const AllProvidersWithPrices: StoryObj<Components.PaczkoapiSelector> = {
         addressStreet: 'ul. Wspólna 67',
         addressCity: 'Warszawa',
         addressPostalCode: '00-687',
-        priceInpost: 10,
-        priceDhl: 15,
+        prices: {
+            inpost: 10,
+            dhl: 15,
+        },
     },
 };
 
@@ -39,7 +41,9 @@ export const Inpost: StoryObj<Components.PaczkoapiSelector> = {
         addressCity: 'Warszawa',
         addressPostalCode: '00-687',
         providers: ['inpost'],
-        priceInpost: 10,
+        prices: {
+            inpost: 10,
+        },
     },
 };
 
@@ -49,7 +53,9 @@ export const Dhl: StoryObj<Components.PaczkoapiSelector> = {
         addressCity: 'Warszawa',
         addressPostalCode: '00-687',
         providers: ['dhl'],
-        priceDhl: 15,
+        prices: {
+            dhl: 15,
+        },
     },
 };
 
@@ -58,8 +64,10 @@ export const BorderTheme: StoryObj<Components.PaczkoapiSelector> = {
         addressStreet: 'ul. Wspólna 67',
         addressCity: 'Warszawa',
         addressPostalCode: '00-687',
-        priceInpost: 10,
-        priceDhl: 15,
+        prices: {
+            inpost: 10,
+            dhl: 15,
+        },
         theme: 'border',
     },
 };

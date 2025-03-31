@@ -1,0 +1,7 @@
+{
+    "extends": "@nzyme/tsconfig/esm.json",
+    "compilerOptions": {
+        "composite": false
+    },
+    "include": ["rollup.config.ts"]
+}
