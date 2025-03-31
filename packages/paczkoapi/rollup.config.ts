@@ -1,5 +1,4 @@
 import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
@@ -16,7 +15,6 @@ const options: RollupOptions = {
             extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
         }),
         unwrapCjsDefaultImport(commonjs)(),
-        unwrapCjsDefaultImport(json)(),
         unwrapCjsDefaultImport(typescript)(),
         unwrapCjsDefaultImport(terser)(),
         del({ targets: 'dist' }),
