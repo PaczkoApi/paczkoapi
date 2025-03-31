@@ -1,3 +1,13 @@
+## 0.3.1 (2025-03-31)
+
+### 🩹 Fixes
+
+- fix release workflow ([dd18969](https://github.com/PaczkoApi/paczkoapi/commit/dd18969))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.3.0 (2025-03-31)
 
 ### 🚀 Features
