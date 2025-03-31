@@ -6,22 +6,20 @@ import type { RollupOptions } from 'rollup';
 import del from 'rollup-plugin-delete';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
-import { unwrapCjsDefaultImport } from '@nzyme/esm';
-
 const isProduction = process.env.ENV === 'prod';
 
 const options: RollupOptions = {
     input: 'src/index.ts',
     plugins: [
+        commonjs(),
+        typescript(),
+        isProduction && terser(),
+        del({ targets: 'dist' }),
+        isProduction && sourcemaps({}),
         nodeResolve({
             preferBuiltins: true,
             extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
         }),
-        unwrapCjsDefaultImport(commonjs)(),
-        unwrapCjsDefaultImport(typescript)(),
-        isProduction && unwrapCjsDefaultImport(terser)(),
-        del({ targets: 'dist' }),
-        isProduction && sourcemaps({}),
     ],
     output: [
         // IIFE bundle

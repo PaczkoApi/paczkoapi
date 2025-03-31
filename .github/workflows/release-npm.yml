@@ -47,9 +47,7 @@ jobs:
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
       - run: yarn monorepo
-      - run: yarn build
-        env:
-          ENV: prod
+      - run: ENV=prod yarn build
       - run: yarn test
       - run: yarn smoke
 
