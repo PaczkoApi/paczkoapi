@@ -1,6 +1,6 @@
 {
     "name": "@paczkoapi/client",
-    "version": "0.3.1",
+    "version": "0.4.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/paczkoapi/paczkoapi.git"
@@ -38,7 +38,7 @@
     "dependencies": {
         "@nzyme/types": "^0.9.0",
         "@nzyme/utils": "^0.9.0",
-        "@paczkoapi/common": "0.3.1",
+        "@paczkoapi/common": "0.4.0",
         "tslib": "^2.8.1"
     },
     "devDependencies": {
