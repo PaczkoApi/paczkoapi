@@ -1,6 +1,6 @@
 import type { Address, PickupPoint, Provider } from '@paczkoapi/common';
 
-import { initialize } from './initialize.js';
+import './initialize.js';
 
 /**
  * Opcje konfiguracji selektora.
@@ -52,7 +52,7 @@ export interface Selector {
     /**
      * Niszczy komponent selektora.
      */
-    destroy(): void;
+    destroy(): Promise<void>;
 }
 
 /**
@@ -61,7 +61,6 @@ export interface Selector {
  * @param options - Opcje konfiguracji selektora.
  */
 export function createSelector(el: HTMLElement | string, options: SelectorOptions = {}): Selector {
-    initialize();
     const element = typeof el === 'string' ? document.querySelector(el) : el;
     if (!element) {
         throw new Error(`Element nie został znaleziony`);
@@ -109,6 +108,8 @@ export function createSelector(el: HTMLElement | string, options: SelectorOption
 
             // Remove all pending modals
             document.querySelectorAll('paczkoapi-modal').forEach(modal => modal.remove());
+
+            return Promise.resolve();
         },
     };
 }

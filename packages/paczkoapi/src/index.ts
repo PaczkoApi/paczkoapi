@@ -1,21 +1,17 @@
-import { createSelector } from './createSelector.lazy.js';
-import { initialize } from './initialize.lazy.js';
+import { createSelector } from './createSelector.js';
 
-const paczkoapi = {
+window.paczkoapi = {
     createSelector,
     initialize,
 };
 
-declare global {
-    interface Window {
-        paczkoapi: typeof paczkoapi;
-    }
-}
-
-if (typeof window !== 'undefined') {
-    window.paczkoapi = paczkoapi;
-}
-
-export { createSelector, initialize };
+export { createSelector };
 export type { Address, PickupPoint, Provider } from '@paczkoapi/common';
 export type { Selector } from './createSelector.js';
+
+/**
+ * Initialize the Paczko API.
+ */
+export function initialize() {
+    return Promise.resolve();
+}

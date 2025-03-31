@@ -1,0 +1,17 @@
+{
+    "name": "@paczkoapi/example-basic",
+    "version": "0.0.0",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/paczkoapi/paczkoapi.git"
+    },
+    "license": "MIT",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "scripts": {
+        "start": "http-server -p 8080"
+    },
+    "devDependencies": {
+        "http-server": "^14.1.1"
+    }
+}
