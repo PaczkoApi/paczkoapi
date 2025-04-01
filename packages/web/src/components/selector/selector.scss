@@ -10,78 +10,92 @@
     --paczkoapi-#{$key}: #{$value};
 }
 
-/* Dark Theme */
-[data-theme='dark'] {
-    --pickup-color-text: #f1f5f9;
-    --pickup-color-text-secondary: #94a3b8;
-    --pickup-border-color: #334155;
-    --pickup-border-color-hover: #475569;
-    --pickup-border-color-selected: #60a5fa;
-    --pickup-background-color: #1e293b;
-    --pickup-background-color-hover: #334155;
-    --pickup-background-color-selected: #1e3a8a;
-    --pickup-radio-dot-color-selected: #60a5fa;
-    --pickup-radio-dot-color-selected-border: #475569;
-}
-
 :host {
-    font-family: variable(font-family);
-    background-color: variable(background-color);
-    color: variable(color-text);
+    // Rodzaj czcionki
+    --paczkoapi-font-family: inherit;
+    // Rozmiar czcionki bazowy
+    --paczkoapi-font-size-base: 1rem;
+    // Rozmiar czcionki mniejszy
+    --paczkoapi-font-size-sm: 0.8rem;
+    // Grubość czcionki normalna
+    --paczkoapi-font-weight-normal: 400;
+    // Grubość czcionki średnia
+    --paczkoapi-font-weight-medium: 500;
+    // Grubość czcionki pogrubiona
+    --paczkoapi-font-weight-bold: 600;
 
-    // Typography
-    @include variable('font-family', inherit);
-    @include variable('font-size-base', 1rem);
-    @include variable('font-size-sm', 0.8rem);
-    @include variable('font-weight-normal', 400);
-    @include variable('font-weight-medium', 500);
-    @include variable('font-weight-bold', 600);
+    // Odstęp bardzo mały
+    --paczkoapi-spacing-xs: 0.25rem;
+    // Odstęp mały
+    --paczkoapi-spacing-sm: 0.75rem;
+    // Odstęp średni
+    --paczkoapi-spacing-md: 1rem;
+    // Odstęp duży
+    --paczkoapi-spacing-lg: 1.5rem;
+    // Odstęp między elementami
+    --paczkoapi-point-gap: 0;
+    // Odstęp wewnętrzny punktu odbioru
+    --paczkoapi-point-padding: var(--paczkoapi-spacing-md);
 
-    // Spacing
-    @include variable('spacing-xs', 0.25rem);
-    @include variable('spacing-sm', 0.5rem);
-    @include variable('spacing-md', 1rem);
-    @include variable('spacing-lg', 1.5rem);
-    @include variable('spacing-gap', 0);
+    // Kolor tekstu
+    --paczkoapi-text-color: #1a1a1a;
+    // Kolor tekstu po najechaniu
+    --paczkoapi-text-color-hover: var(--paczkoapi-text-color);
+    // Kolor tekstu po wybraniu
+    --paczkoapi-text-color-selected: var(--paczkoapi-text-color);
+    // Kolor tekstu drugorzędny (adres)
+    --paczkoapi-text-color-secondary: #666;
+    // Kolor tekstu drugorzędny (adres) po najechaniu
+    --paczkoapi-text-color-secondary-hover: var(--paczkoapi-text-color-secondary);
+    // Kolor tekstu drugorzędny (adres) po wybraniu
+    --paczkoapi-text-color-secondary-selected: var(--paczkoapi-text-color-secondary);
 
-    // Colors
-    @include variable('color-text', #1a1a1a);
-    @include variable('color-text-secondary', #666);
-    @include variable('color-primary', #1a1a1a);
+    // Kolor tła punktu odbioru
+    --paczkoapi-background-color: transparent;
+    // Kolor tła punktu odbioru po najechaniu
+    --paczkoapi-background-color-hover: #f9f9f9;
+    // Kolor tła punktu odbioru po wybraniu
+    --paczkoapi-background-color-selected: transparent;
 
-    // Background
-    @include variable('background-color', transparent);
-    @include variable('background-color-hover', #fcfcfc);
-    @include variable('background-color-selected', transparent);
+    // Promień krawędzi punktu odbioru
+    --paczkoapi-border-radius: 0.5rem;
+    // Kolor krawędzi punktu odbioru
+    --paczkoapi-border-color: transparent;
+    // Kolor krawędzi punktu odbioru po najechaniu
+    --paczkoapi-border-color-hover: var(--paczkoapi-border-color);
+    // Kolor krawędzi punktu odbioru po wybraniu
+    --paczkoapi-border-color-selected: var(--paczkoapi-border-color);
 
-    // Border
-    @include variable('border-radius', 0.5rem);
-    @include variable('border-radius-sm', 0.25rem);
-    @include variable('border-color', transparent);
-    @include variable('border-color-hover', transparent);
-    @include variable('border-color-selected', transparent);
+    // Rozmiar elementu radio
+    --paczkoapi-radio-size: 1.25rem;
+    // Kolor kropki w radio po wybraniu
+    --paczkoapi-radio-dot-color: #1a1a1a;
+    // Grubość krawędzi elementu radio
+    --paczkoapi-radio-border-size: 2px;
+    // Kolor krawędzi elementu radio
+    --paczkoapi-radio-border-color: #e5e5e5;
+    // Kolor krawędzi elementu radio po wybraniu
+    --paczkoapi-radio-border-color-selected: #1a1a1a;
+    // Kolor krawędzi elementu radio po najechaniu
+    --paczkoapi-radio-border-color-hover: var(--paczkoapi-radio-border-color);
+    // Margines elementu radio
+    --paczkoapi-radio-margin: 0 var(--paczkoapi-spacing-sm) 0 0;
+    // Rozmiar kropki w radio po wybraniu
+    --paczkoapi-radio-dot-size: 0.75rem;
 
-    // Radio
-    @include variable('radio-size', 1.25rem);
-    @include variable('radio-border-size', 2px);
-    @include variable('radio-border-color', #e5e5e5);
-    @include variable('radio-border-color-selected', variable(color-primary));
-    @include variable('radio-dot-size', 0.75rem);
-    @include variable('radio-dot-color', #cbd5e1);
-    @include variable('radio-dot-color-selected', variable(color-primary));
-
-    // Transitions
-    @include variable('transition-duration', 150ms);
-    @include variable('transition-timing', ease-out);
+    // Czas przejścia animacji
+    --paczkoapi-transition-duration: 150ms;
+    // Funkcja przejścia animacji
+    --paczkoapi-transition-timing: ease-out;
 }
 
 .theme {
     &_border {
-        @include variable('spacing-gap', variable(spacing-sm));
-        @include variable('background-color-selected', variable(background-color-hover));
-        @include variable('border-color', #f3f3f3);
-        @include variable('border-color-hover', #cbd5e1);
-        @include variable('border-color-selected', #a0a0a0);
+        --paczkoapi-point-gap: var(--paczkoapi-spacing-sm);
+        --paczkoapi-background-color-selected: var(--paczkoapi-background-color-hover);
+        --paczkoapi-border-color: #f3f3f3;
+        --paczkoapi-border-color-hover: #cbd5e1;
+        --paczkoapi-border-color-selected: #a0a0a0;
     }
 }
 
@@ -92,29 +106,36 @@ fieldset {
     max-width: 600px;
     display: flex;
     flex-direction: column;
-    gap: variable(spacing-gap);
+    gap: variable(point-gap);
+    color: variable(text-color);
 }
 
 label {
     display: flex;
     align-items: flex-start;
-    padding: variable(spacing-md);
+    padding: variable(point-padding);
     cursor: pointer;
     position: relative;
+    color: variable(text-color);
     border: 1px solid variable(border-color);
     border-radius: variable(border-radius);
-    transition:
-        background-color variable(transition-duration) variable(transition-timing),
-        border-color variable(transition-duration) variable(transition-timing);
+    background-color: variable(background-color);
+    transition: all variable(transition-duration) variable(transition-timing);
 
-    &.selected {
-        border-color: variable(border-color-selected);
-        background-color: variable(background-color-selected);
+    &:hover {
+        --paczkoapi-background-color: var(--paczkoapi-background-color-hover);
+        --paczkoapi-border-color: var(--paczkoapi-border-color-hover);
+        --paczkoapi-text-color: var(--paczkoapi-text-color-hover);
+        --paczkoapi-text-color-secondary: var(--paczkoapi-text-color-secondary-hover);
+        --paczkoapi-radio-border-color: var(--paczkoapi-radio-border-color-hover);
     }
 
-    &:hover,
-    &:hover.selected {
-        background-color: variable(background-color-hover);
+    &.selected {
+        --paczkoapi-background-color: var(--paczkoapi-background-color-selected);
+        --paczkoapi-border-color: var(--paczkoapi-border-color-selected);
+        --paczkoapi-text-color: var(--paczkoapi-text-color-selected);
+        --paczkoapi-text-color-secondary: var(--paczkoapi-text-color-secondary-selected);
+        --paczkoapi-radio-border-color: var(--paczkoapi-radio-border-color-selected);
     }
 }
 
@@ -124,7 +145,7 @@ label {
     height: variable(radio-size);
     border: variable(radio-border-size) solid variable(radio-border-color);
     border-radius: 50%;
-    margin-right: variable(spacing-md);
+    margin: variable(radio-margin);
     position: relative;
     transition: border-color variable(transition-duration) variable(transition-timing);
 
@@ -138,7 +159,7 @@ label {
         width: variable(radio-dot-size);
         height: variable(radio-dot-size);
         border-radius: 50%;
-        background-color: variable(radio-dot-color-selected);
+        background-color: variable(radio-dot-color);
         transition:
             transform variable(transition-duration) variable(transition-timing),
             opacity variable(transition-duration) variable(transition-timing);
@@ -147,10 +168,6 @@ label {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
-    }
-
-    .selected & {
-        border-color: variable(radio-dot-color-selected);
     }
 }
 
@@ -169,12 +186,12 @@ label {
 .name {
     font-size: variable(font-size-base);
     font-weight: variable(font-weight-medium);
-    color: variable(color-text);
+    color: variable(text-color);
 }
 
 .address {
     font-size: variable(font-size-sm);
-    color: variable(color-text-secondary);
+    color: variable(text-color-secondary);
 }
 
 .price-provider {
@@ -188,7 +205,7 @@ label {
 .price {
     font-size: variable(font-size-base);
     font-weight: variable(font-weight-medium);
-    color: variable(color-text);
+    color: variable(text-color);
     margin-bottom: auto;
 }
 
@@ -214,7 +231,7 @@ input {
 
 .change {
     font-size: variable(font-size-sm);
-    color: variable(color-text);
+    color: variable(text-color);
     text-decoration: underline;
     cursor: pointer;
     border: none;
@@ -222,4 +239,39 @@ input {
     padding: 1rem;
     margin: -1rem;
     align-self: flex-start;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 2.5rem;
+    aspect-ratio: 4;
+    --_g: no-repeat radial-gradient(circle closest-side, currentColor 90%, transparent);
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100% / 3) 100%;
+    animation: loader 1s infinite ease-out;
+    margin: 0 auto;
+}
+
+@keyframes loader {
+    33% {
+        background-size:
+            calc(100% / 3) 0%,
+            calc(100% / 3) 100%,
+            calc(100% / 3) 100%;
+    }
+    50% {
+        background-size:
+            calc(100% / 3) 100%,
+            calc(100% / 3) 0%,
+            calc(100% / 3) 100%;
+    }
+    66% {
+        background-size:
+            calc(100% / 3) 100%,
+            calc(100% / 3) 100%,
+            calc(100% / 3) 0%;
+    }
 }

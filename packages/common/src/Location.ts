@@ -1,14 +1,14 @@
 /**
- * Geographical location
+ * Lokalizacja geograficzna
  */
-
 export interface Location {
     /**
-     * Latitude
+     * Szerokość geograficzna
      */
     lat: number;
+
     /**
-     * Longitude
+     * Długość geograficzna
      */
     lng: number;
 }

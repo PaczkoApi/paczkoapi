@@ -64,6 +64,10 @@ export namespace Components {
          */
         "setAddress": (address: Address, forceFetch?: boolean) => Promise<void>;
         /**
+          * Whether to show the radios
+         */
+        "showRadio": boolean | null | undefined;
+        /**
           * The theme of the selector
          */
         "theme": 'border' | null | undefined;
@@ -174,6 +178,10 @@ declare namespace LocalJSX {
           * The providers to search for pickup points
          */
         "providers"?: Provider[] | Provider;
+        /**
+          * Whether to show the radios
+         */
+        "showRadio"?: boolean | null | undefined;
         /**
           * The theme of the selector
          */

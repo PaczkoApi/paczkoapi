@@ -59,6 +59,16 @@ export const Dhl: StoryObj<Components.PaczkoapiSelector> = {
     },
 };
 
+export const NoRadio: StoryObj<Components.PaczkoapiSelector> = {
+    args: {
+        addressStreet: 'ul. Wspólna 67',
+        addressCity: 'Warszawa',
+        addressPostalCode: '00-687',
+        showRadio: false,
+        theme: 'border',
+    },
+};
+
 export const BorderTheme: StoryObj<Components.PaczkoapiSelector> = {
     args: {
         addressStreet: 'ul. Wspólna 67',

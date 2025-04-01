@@ -1,11 +1,9 @@
-import type { Item } from '@nzyme/types';
-
 import { ApiError } from './ApiError.js';
 
 /**
  * Pickup point types
  */
-export const PROVIDERS = ['inpost', 'dhl'] as const;
+export const PROVIDERS: readonly Provider[] = ['inpost', 'dhl'];
 
 /**
  * Provider set
@@ -13,9 +11,9 @@ export const PROVIDERS = ['inpost', 'dhl'] as const;
 export const PROVIDERS_SET = new Set(PROVIDERS);
 
 /**
- * Provider type
+ * Typ dostawcy
  */
-export type Provider = Item<typeof PROVIDERS>;
+export type Provider = 'inpost' | 'dhl';
 
 /**
  * Parse providers

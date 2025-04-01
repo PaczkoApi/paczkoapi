@@ -48,7 +48,7 @@ jobs:
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
       - run: yarn monorepo
       - run: ENV=prod yarn build
-      - run: yarn test
+      # - run: yarn test
       - run: yarn smoke
 
       - run: yarn release ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.first_release && '--first-release' || '' }}

@@ -2,7 +2,7 @@ import { setApiLocal } from '@paczkoapi/common';
 import { INITIAL_VIEWPORTS, MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/web-components';
 
-import { defineCustomElements } from '../loader';
+import { defineCustomElements } from '../dist/loader';
 import './styles.scss';
 
 defineCustomElements();

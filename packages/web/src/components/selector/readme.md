@@ -18,7 +18,8 @@
 | `pointName`         | `point-name`          | The currently selected pickup point ID      | `null \| string \| undefined`                                                       | `undefined` |
 | `pointProvider`     | `point-provider`      | The currently selected pickup point type    | `"dhl" \| "inpost" \| null \| undefined`                                            | `undefined` |
 | `prices`            | --                    | The prices of pickup points                 | `null \| undefined \| { inpost?: number \| undefined; dhl?: number \| undefined; }` | `undefined` |
-| `providers`         | `providers`           | The providers to search for pickup points   | `"dhl" \| "inpost" \| ("inpost" \| "dhl")[]`                                        | `[]`        |
+| `providers`         | `providers`           | The providers to search for pickup points   | `"dhl" \| "inpost" \| Provider[]`                                                   | `[]`        |
+| `showRadio`         | `show-radio`          | Whether to show the radios                  | `boolean \| null \| undefined`                                                      | `undefined` |
 | `theme`             | `theme`               | The theme of the selector                   | `"border" \| null \| undefined`                                                     | `undefined` |
 
 

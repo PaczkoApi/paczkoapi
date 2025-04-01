@@ -8,11 +8,12 @@ if (typeof window !== 'undefined') {
 }
 
 export { createSelector };
-export type { Address, PickupPoint, Provider } from '@paczkoapi/common';
-export type { Selector } from './createSelector.js';
+export type * from './types.js';
+export type { Selector, SelectorOptions } from './createSelector.js';
 
 /**
- * Initialize the Paczko API.
+ * Pobiera i inicjuje skrypty.
+ * Przydatne, jeśli chcemy załadować skrypty jeszcze przed zainicjowaniem komponentu.
  */
 export function initialize() {
     return Promise.resolve();
