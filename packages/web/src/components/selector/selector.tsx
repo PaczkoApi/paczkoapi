@@ -276,6 +276,8 @@ export class PaczkoapiSelector {
                 role="radiogroup"
                 class={`theme_${this.theme}`}
             >
+                {this.isLoading !== false && <div class="loader" />}
+
                 {/* Najbliższe punkty */}
                 {this.nearestPoints?.map(point => this.renderPoint(point))}
 

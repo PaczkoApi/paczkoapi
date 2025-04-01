@@ -107,6 +107,7 @@ fieldset {
     display: flex;
     flex-direction: column;
     gap: variable(point-gap);
+    color: variable(text-color);
 }
 
 label {
@@ -238,4 +239,39 @@ input {
     padding: 1rem;
     margin: -1rem;
     align-self: flex-start;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 2.5rem;
+    aspect-ratio: 4;
+    --_g: no-repeat radial-gradient(circle closest-side, currentColor 90%, transparent);
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100% / 3) 100%;
+    animation: loader 1s infinite ease-out;
+    margin: 0 auto;
+}
+
+@keyframes loader {
+    33% {
+        background-size:
+            calc(100% / 3) 0%,
+            calc(100% / 3) 100%,
+            calc(100% / 3) 100%;
+    }
+    50% {
+        background-size:
+            calc(100% / 3) 100%,
+            calc(100% / 3) 0%,
+            calc(100% / 3) 100%;
+    }
+    66% {
+        background-size:
+            calc(100% / 3) 100%,
+            calc(100% / 3) 100%,
+            calc(100% / 3) 0%;
+    }
 }
