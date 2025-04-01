@@ -144,7 +144,7 @@ export class PaczkoapiSelector {
 
     @State() nearestPoints: PickupPoint[] | undefined;
     @State() mapPoints: Partial<Record<Provider, PickupPoint | undefined>> | undefined;
-    @State() isLoading: boolean | undefined;
+    @State() loading: boolean | undefined;
     @State() error: string | undefined;
 
     /**
@@ -192,10 +192,13 @@ export class PaczkoapiSelector {
     @Watch('limit')
     @Watch('providers')
     onSearchParamsChange() {
+        this.loading = true;
         void this.fetchDebounced();
     }
 
     componentWillLoad() {
+        this.loading = true;
+
         void this.fetchDebounced();
     }
 
@@ -210,12 +213,15 @@ export class PaczkoapiSelector {
         // Don't fetch if we don't have enough data
         if (!this.addressCity || !this.addressPostalCode || !this.addressStreet) {
             this.nearestPoints = [];
+            this.loading = false;
             return;
         }
 
-        this.isLoading = true;
+        this.loading = true;
         this.error = undefined;
-        this.abortController = new AbortController();
+
+        const abortController = new AbortController();
+        this.abortController = abortController;
 
         try {
             const points = await findNearestPoints({
@@ -227,7 +233,6 @@ export class PaczkoapiSelector {
                 limit: this.limit,
             });
 
-            this.abortController = null;
             this.nearestPoints = points;
             this.selectFirstPoint();
         } catch (err) {
@@ -238,8 +243,10 @@ export class PaczkoapiSelector {
 
             throw err;
         } finally {
-            this.abortController = null;
-            this.isLoading = false;
+            if (this.abortController === abortController) {
+                this.loading = false;
+                this.abortController = null;
+            }
         }
     }
 
@@ -276,13 +283,13 @@ export class PaczkoapiSelector {
                 role="radiogroup"
                 class={`theme_${this.theme}`}
             >
-                {this.isLoading !== false && <div class="loader" />}
-
                 {/* Najbliższe punkty */}
                 {this.nearestPoints?.map(point => this.renderPoint(point))}
 
                 {/* Wybór punktu z mapy */}
                 {this.providersAvailable.map(provider => this.renderMap(provider))}
+
+                {this.loading && !this.nearestPoints?.length && <div class="loader" />}
             </fieldset>
         );
     }

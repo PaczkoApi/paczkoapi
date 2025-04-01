@@ -252,7 +252,7 @@ input {
         var(--_g) 100% 50%;
     background-size: calc(100% / 3) 100%;
     animation: loader 1s infinite ease-out;
-    margin: 0 auto;
+    margin: variable(spacing-md) auto;
 }
 
 @keyframes loader {
