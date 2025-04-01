@@ -1,3 +1,14 @@
+## 0.5.0 (2025-04-01)
+
+### 🚀 Features
+
+- imprvements and examples ([9428aa6](https://github.com/PaczkoApi/paczkoapi/commit/9428aa6))
+- add loader ([77cd152](https://github.com/PaczkoApi/paczkoapi/commit/77cd152))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.4.0 (2025-03-31)
 
 ### 🚀 Features
