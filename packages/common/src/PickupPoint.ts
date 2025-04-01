@@ -2,41 +2,41 @@ import type { Location } from './Location.js';
 import type { Provider } from './providers.js';
 
 /**
- * Pickup point
+ * Punkt odbioru
  */
 export interface PickupPoint {
     /**
-     * Type of the pickup point
+     * Typ punktu odbioru
      */
     provider: Provider;
 
     /**
-     * ID of the pickup point
+     * ID punktu odbioru
      */
     id: string;
 
     /**
-     * Name of the pickup point
+     * Nazwa punktu odbioru
      */
     name: string;
 
     /**
-     * City of the pickup point
+     * Miasto punktu odbioru
      */
     city: string;
 
     /**
-     * Address of the pickup point
+     * Adres punktu odbioru
      */
     address?: string;
 
     /**
-     * Distance to the pickup point in meters
+     * Odległość do punktu odbioru w metrach
      */
     distance?: number;
 
     /**
-     * Location of the pickup point
+     * Lokalizacja punktu odbioru
      */
     location?: Location;
 }

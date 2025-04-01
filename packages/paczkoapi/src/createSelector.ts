@@ -1,4 +1,4 @@
-import type { Address, PickupPoint, Provider } from '@paczkoapi/common';
+import type { Address, PickupPoint, PricesConfig, Provider } from './types.js';
 
 import './initialize.js';
 
@@ -14,6 +14,13 @@ export interface SelectorOptions {
      * - `dhl`
      *
      * Domyślnie włączeni są wszyscy dostawcy.
+     *
+     * @example
+     * ```js
+     * createSelector('#selector', {
+     *     providers: ['inpost', 'dhl'],
+     * });
+     * ```
      */
     providers?: Provider | Provider[];
 
@@ -26,11 +33,42 @@ export interface SelectorOptions {
     /**
      * Cena dostawy dla poszczególnych dostawców w złotych.
      * Domyślnie cena dostawy jest niewidoczna.
+     *
+     * @example
+     * ```js
+     * createSelector('#selector', {
+     *     prices: {
+     *         inpost: 10,
+     *         dhl: 15,
+     *     },
+     * });
+     * ```
      */
-    prices?: Partial<Record<Provider, number>>;
+    prices?: PricesConfig;
+
+    /**
+     * Czy wyświetlać radio przy punktach odbioru.
+     *
+     * Wyłączenie radio wymaga zmiany kilku zmiennych CSS,
+     * żeby wybrany punkt odbioru był widoczny.
+     *
+     * Zobacz przykład: [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/PaczkoApi/paczkoapi/tree/main/examples/theme-no-radio?file=index.html)
+     *
+     * @default true
+     */
+    showRadio?: boolean;
 
     /**
      * Obsługa zdarzenia wybrania punktu odbioru.
+     *
+     * @example
+     * ```js
+     * createSelector('#selector', {
+     *     onPointSelected: (point) => {
+     *         console.log(point);
+     *     },
+     * });
+     * ```
      */
     onPointSelected?: (point: PickupPoint) => void;
 }
@@ -40,12 +78,22 @@ export interface SelectorOptions {
  */
 export interface Selector {
     /**
-     * Zwraca wybrany punkt odbioru.
+     * Wybrany punkt odbioru.
      */
-    get selectedPoint(): PickupPoint | null;
+    readonly selectedPoint: PickupPoint | null;
 
     /**
      * Ustawia adres użytkownika.
+     *
+     * @param address - Adres użytkownika.
+     * @example
+     * ```js
+     * await selector.setAddress({
+     *     city: 'Warszawa',
+     *     street: 'ul. Wspólna 67',
+     *     postalCode: '00-687',
+     * });
+     * ```
      */
     setAddress(address: Address): Promise<void>;
 
@@ -88,6 +136,7 @@ export function createSelector(el: HTMLElement | string, options: SelectorOption
         selector.prices = options.prices;
     }
 
+    selector.showRadio = options.showRadio;
     selector.addEventListener('selected', e => {
         options.onPointSelected?.(e.detail);
     });

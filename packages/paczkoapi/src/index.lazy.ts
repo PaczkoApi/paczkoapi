@@ -10,5 +10,5 @@ if (typeof window !== 'undefined') {
 
 export { createSelector, initialize };
 
-export type { Address, PickupPoint, Provider } from '@paczkoapi/common';
-export type { Selector } from './createSelector.js';
+export type * from './types.js';
+export type { Selector, SelectorOptions } from './createSelector.js';

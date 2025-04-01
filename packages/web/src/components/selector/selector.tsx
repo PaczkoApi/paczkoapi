@@ -87,6 +87,12 @@ export class PaczkoapiSelector {
     }
 
     /**
+     * Whether to show the radios
+     */
+    @Prop()
+    showRadio: boolean | null | undefined;
+
+    /**
      * The address to search for pickup points
      */
     @Prop({ mutable: true })
@@ -294,10 +300,7 @@ export class PaczkoapiSelector {
                     aria-labelledby={`point-name-${index}`}
                     aria-describedby={`point-address-${index}`}
                 />
-                <span
-                    class="radio"
-                    aria-hidden="true"
-                />
+                {this.renderRadio()}
                 <div class="content">
                     <div class="info">
                         <div
@@ -342,10 +345,7 @@ export class PaczkoapiSelector {
                 onClick={() => void this.handleMapSelection(provider)}
                 role="button"
             >
-                <span
-                    class="radio"
-                    aria-hidden="true"
-                />
+                {this.renderRadio()}
                 <div class="content">
                     <div class="info">
                         <div
@@ -361,6 +361,19 @@ export class PaczkoapiSelector {
                     {this.renderRight(provider)}
                 </div>
             </label>
+        );
+    }
+
+    private renderRadio() {
+        if (this.showRadio === false) {
+            return null;
+        }
+
+        return (
+            <span
+                class="radio"
+                aria-hidden="true"
+            />
         );
     }
 
