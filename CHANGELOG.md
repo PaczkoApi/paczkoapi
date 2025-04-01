@@ -1,3 +1,13 @@
+## 0.5.1 (2025-04-01)
+
+### 🩹 Fixes
+
+- loader fix ([8af0302](https://github.com/PaczkoApi/paczkoapi/commit/8af0302))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.5.0 (2025-04-01)
 
 ### 🚀 Features
