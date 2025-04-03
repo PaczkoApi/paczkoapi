@@ -16,7 +16,7 @@ const options: RollupOptions = {
             dir: 'dist',
             entryFileNames: '[name].mjs',
             format: 'es',
-            chunkFileNames: 'esm/[hash].mjs',
+            chunkFileNames: 'chunks/[hash].mjs',
             sourcemap: !isProduction,
         },
         // CJS bundle
@@ -24,7 +24,7 @@ const options: RollupOptions = {
             dir: 'dist',
             entryFileNames: '[name].cjs',
             format: 'cjs',
-            chunkFileNames: 'cjs/[hash].cjs',
+            chunkFileNames: 'chunks/[hash].cjs',
             sourcemap: !isProduction,
         },
     ],
