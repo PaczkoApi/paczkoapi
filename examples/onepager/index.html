@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+
+        <title>PaczkoAPI</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.amber.min.css"
+        />
+        <style>
+            body {
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container">
+            <section class="grid">
+                <form>
+                    <fieldset>
+                        <label>
+                            Miasto
+                            <input
+                                name="city"
+                                autocomplete="address-level2"
+                            />
+                        </label>
+                        <label>
+                            Kod pocztowy
+                            <input
+                                type="text"
+                                name="postalCode"
+                                autocomplete="postal-code"
+                            />
+                        </label>
+
+                        <label>
+                            Adres
+                            <input
+                                type="text"
+                                name="address"
+                                autocomplete="street-address"
+                            />
+                        </label>
+                    </fieldset>
+                </form>
+                <div id="selector"></div>
+            </section>
+
+            <pre><code id="point">Tutaj wyświetli się wybrany punkt</code></pre>
+        </main>
+
+        <script
+            type="module"
+            src="https://cdn.jsdelivr.net/npm/paczkoapi/dist/index.lazy.mjs"
+        ></script>
+        <script
+            nomodule
+            src="https://cdn.jsdelivr.net/npm/paczkoapi/dist/index.js"
+        ></script>
+
+        <script>
+            // Ponieważ paczkoapi jest zbudowane jako ES module, musimy czekać na załadowanie paczkoapi przed użyciem.
+            window.addEventListener('DOMContentLoaded', async () => {
+                // Tworzymy komponent selektora
+                const selector = paczkoapi.createSelector('#selector', {
+                    // NOTE: na stackblitz nie działa mapa DHL - ten problem nie wystąpi w rzeczywistości
+                    providers: ['inpost', 'dhl'],
+                    // Obsługa zdarzenia wybrania punktu odbioru
+                    onPointSelected: point => {
+                        console.log(point);
+                        // Wyświetlamy wybrany punkt
+                        document.getElementById('point').textContent = JSON.stringify(
+                            point,
+                            null,
+                            2,
+                        );
+                    },
+                });
+
+                // Obsługa formularza
+                const cityInput = document.querySelector('input[name="city"]');
+                cityInput.addEventListener('change', () => {
+                    selector.setCity(cityInput.value);
+                });
+
+                const postalCodeInput = document.querySelector('input[name="postalCode"]');
+                postalCodeInput.addEventListener('change', () => {
+                    selector.setPostalCode(postalCodeInput.value);
+                });
+
+                const addressInput = document.querySelector('input[name="address"]');
+                addressInput.addEventListener('change', () => {
+                    selector.setStreet(addressInput.value);
+                });
+            });
+        </script>
+    </body>
+</html>

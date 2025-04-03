@@ -6,28 +6,23 @@ import type { Selector, SelectorOptions } from './createSelector.js';
 export function createSelector(el: HTMLElement | string, options: SelectorOptions = {}): Selector {
     let selector: Selector | undefined;
 
-    const selectorPromise = createSelectorLazy(el, options).then(s => {
+    const promise = createSelectorLazy(el, options).then(s => {
         selector = s;
+        return s;
     });
 
     return {
         get selectedPoint() {
             return selector?.selectedPoint ?? null;
         },
-        async setAddress(address) {
-            if (!selector) {
-                await selectorPromise;
-            }
-
-            await selector?.setAddress(address);
+        get address() {
+            return selector?.address ?? null;
         },
-        async destroy() {
-            if (!selector) {
-                await selectorPromise;
-            }
-
-            await selector?.destroy();
-        },
+        setAddress: address => promise.then(s => s.setAddress(address)),
+        setCity: city => promise.then(s => s.setCity(city)),
+        setPostalCode: postalCode => promise.then(s => s.setPostalCode(postalCode)),
+        setStreet: street => promise.then(s => s.setStreet(street)),
+        destroy: () => promise.then(s => s.destroy()),
     };
 }
 

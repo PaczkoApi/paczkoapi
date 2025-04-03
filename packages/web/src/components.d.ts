@@ -20,7 +20,7 @@ export namespace Components {
         /**
           * The address to search for pickup points
          */
-        "address": Address | null | undefined;
+        "address": Address | null;
         /**
           * The city to search for pickup points
          */
@@ -33,6 +33,10 @@ export namespace Components {
           * The street to search for pickup points
          */
         "addressStreet": string | null | undefined;
+        /**
+          * The debounce time for the fetch points
+         */
+        "debounce": number | undefined;
         /**
           * The limit of pickup points to fetch
          */
@@ -67,10 +71,6 @@ export namespace Components {
           * Whether to show the radios
          */
         "showRadio": boolean | null | undefined;
-        /**
-          * The theme of the selector
-         */
-        "theme": 'border' | null | undefined;
     }
 }
 export interface PaczkoapiModalCustomEvent<T> extends CustomEvent<T> {
@@ -136,7 +136,7 @@ declare namespace LocalJSX {
         /**
           * The address to search for pickup points
          */
-        "address"?: Address | null | undefined;
+        "address"?: Address | null;
         /**
           * The city to search for pickup points
          */
@@ -149,6 +149,10 @@ declare namespace LocalJSX {
           * The street to search for pickup points
          */
         "addressStreet"?: string | null | undefined;
+        /**
+          * The debounce time for the fetch points
+         */
+        "debounce"?: number | undefined;
         /**
           * The limit of pickup points to fetch
          */
@@ -182,10 +186,6 @@ declare namespace LocalJSX {
           * Whether to show the radios
          */
         "showRadio"?: boolean | null | undefined;
-        /**
-          * The theme of the selector
-         */
-        "theme"?: 'border' | null | undefined;
     }
     interface IntrinsicElements {
         "paczkoapi-modal": PaczkoapiModal;

@@ -1,3 +1,5 @@
+import './initialize.js';
+
 import { createSelector } from './createSelector.js';
 
 if (typeof window !== 'undefined') {

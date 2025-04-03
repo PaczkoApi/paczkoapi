@@ -13,7 +13,9 @@ export interface SelectorOptions {
      * - `inpost`
      * - `dhl`
      *
-     * Domyślnie włączeni są wszyscy dostawcy.
+     * Domyślnie włączony jest tylko dostawca `inpost`.
+     *
+     * @default 'inpost'
      *
      * @example
      * ```js
@@ -59,6 +61,19 @@ export interface SelectorOptions {
     showRadio?: boolean;
 
     /**
+     * W przypadku gdy adres użytkownika zmieniany jest często,
+     * requesty do API są wysyłane maksymalnie raz na sekundę,
+     * aby ograniczyć liczbę zapytań.
+     *
+     * Można zmienić tą wartość, jeśli jest to konieczne,
+     * natomiast może to spowodować, zbyt częste wysyłanie zapytań,
+     * a w efekcie wiązać się z większymi kosztami.
+     *
+     * @default 1000
+     */
+    debounce?: number;
+
+    /**
      * Obsługa zdarzenia wybrania punktu odbioru.
      *
      * @example
@@ -83,6 +98,11 @@ export interface Selector {
     readonly selectedPoint: PickupPoint | null;
 
     /**
+     * Aktualny adres użytkownika.
+     */
+    readonly address: Address | null;
+
+    /**
      * Ustawia adres użytkownika.
      *
      * @param address - Adres użytkownika.
@@ -96,6 +116,27 @@ export interface Selector {
      * ```
      */
     setAddress(address: Address): Promise<void>;
+
+    /**
+     * Ustawia miasto użytkownika.
+     *
+     * @param city - Miasto użytkownika.
+     */
+    setCity(city: string): Promise<void>;
+
+    /**
+     * Ustawia kod pocztowy użytkownika.
+     *
+     * @param postalCode - Kod pocztowy użytkownika.
+     */
+    setPostalCode(postalCode: string): Promise<void>;
+
+    /**
+     * Ustawia ulicę użytkownika.
+     *
+     * @param street - Ulica użytkownika.
+     */
+    setStreet(street: string): Promise<void>;
 
     /**
      * Niszczy komponent selektora.
@@ -136,6 +177,10 @@ export function createSelector(el: HTMLElement | string, options: SelectorOption
         selector.prices = options.prices;
     }
 
+    if (options.debounce) {
+        selector.debounce = options.debounce;
+    }
+
     selector.showRadio = options.showRadio;
     selector.addEventListener('selected', e => {
         options.onPointSelected?.(e.detail);
@@ -148,8 +193,20 @@ export function createSelector(el: HTMLElement | string, options: SelectorOption
         get selectedPoint() {
             return selector.point;
         },
+        get address() {
+            return selector.address;
+        },
         setAddress(address) {
             return selector.setAddress(address);
+        },
+        setCity(city) {
+            return selector.setAddress({ ...selector.address, city });
+        },
+        setPostalCode(postalCode) {
+            return selector.setAddress({ ...selector.address, postalCode });
+        },
+        setStreet(street) {
+            return selector.setAddress({ ...selector.address, street });
         },
         destroy() {
             selector.after(element);

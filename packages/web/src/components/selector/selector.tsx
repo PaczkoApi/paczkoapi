@@ -11,6 +11,7 @@ import {
     State,
     type VNode,
     Watch,
+    forceUpdate,
     h,
 } from '@stencil/core';
 import debounce from 'lodash.debounce';
@@ -18,7 +19,7 @@ import { formatMoney } from 'src/utils/formatMoney';
 import { openDhlMap } from 'src/utils/openDhlMap';
 import { openInpostMap } from 'src/utils/openInpostMap';
 
-import { formatLength } from '@nzyme/utils';
+import { formatLength, waitFor } from '@nzyme/utils';
 
 import DhlLogo from '../../assets/dhl.svg';
 import InpostLogo from '../../assets/inpost.svg';
@@ -95,8 +96,14 @@ export class PaczkoapiSelector {
     /**
      * The address to search for pickup points
      */
-    @Prop({ mutable: true })
-    address: Address | null | undefined;
+    @Prop()
+    get address(): Address | null | undefined {
+        return this._address;
+    }
+
+    set address(value: Address | null | undefined) {
+        this._address = value ?? null;
+    }
 
     /**
      * The prices of pickup points
@@ -109,12 +116,6 @@ export class PaczkoapiSelector {
      */
     @Prop()
     limit: number | null | undefined;
-
-    /**
-     * The theme of the selector
-     */
-    @Prop()
-    theme: 'border' | null | undefined;
 
     /**
      * The currently selected pickup point ID
@@ -137,6 +138,12 @@ export class PaczkoapiSelector {
     }
 
     /**
+     * The debounce time for the fetch points
+     */
+    @Prop()
+    debounce: number | undefined;
+
+    /**
      * Event emitted when a pickup point is selected
      */
     @Event({ composed: true })
@@ -144,7 +151,7 @@ export class PaczkoapiSelector {
 
     @State() nearestPoints: PickupPoint[] | undefined;
     @State() mapPoints: Partial<Record<Provider, PickupPoint | undefined>> | undefined;
-    @State() loading: boolean | undefined;
+    @State() isLoading: boolean | undefined;
     @State() error: string | undefined;
 
     /**
@@ -152,16 +159,8 @@ export class PaczkoapiSelector {
      */
     @Method()
     async setAddress(address: Address, forceFetch = false) {
-        this.addressCity = address.city ?? null;
-        this.addressPostalCode = address.postalCode ?? null;
-        this.addressStreet = address.street ?? null;
-
-        if (forceFetch) {
-            void this.fetchDebounced();
-            await this.fetchDebounced.flush();
-        } else {
-            await this.fetchDebounced();
-        }
+        this._address = { ...address };
+        await this.fetchPoints(forceFetch);
     }
 
     @Method()
@@ -174,11 +173,9 @@ export class PaczkoapiSelector {
     private abortController: AbortController | null = null;
     private _providers: Provider[] = [];
     private _point: PickupPoint | null = null;
+    private _address: Address | null = null;
 
-    private fetchDebounced = debounce(() => this.fetchPickupPoints(), 1000, {
-        leading: true,
-        trailing: true,
-    });
+    private fetchDebounced: ReturnType<typeof debounce<typeof this.fetchPointsCore>> | undefined;
 
     private get providersAvailable(): readonly Provider[] {
         if (!this._providers.length) {
@@ -192,42 +189,61 @@ export class PaczkoapiSelector {
     @Watch('limit')
     @Watch('providers')
     onSearchParamsChange() {
-        this.loading = true;
-        void this.fetchDebounced();
+        void this.fetchPoints();
     }
 
     componentWillLoad() {
-        this.loading = true;
-
-        void this.fetchDebounced();
+        void this.fetchPoints();
     }
 
     disconnectedCallback() {
         this.cancelFetch();
     }
 
-    private async fetchPickupPoints() {
+    private async fetchPoints(force = false) {
+        if (!this.fetchDebounced) {
+            this.fetchDebounced = debounce(
+                (address: Address) => this.fetchPointsCore(address),
+                this.debounce ?? 1000,
+                {
+                    leading: true,
+                    trailing: true,
+                },
+            );
+        }
+
         // Cancel any in-flight requests
         this.cancelFetch();
 
-        // Don't fetch if we don't have enough data
-        if (!this.addressCity || !this.addressPostalCode || !this.addressStreet) {
+        const address = this._address;
+        if (!address || !address.city || !address.postalCode || !address.street) {
             this.nearestPoints = [];
-            this.loading = false;
+            this.isLoading = false;
             return;
         }
 
-        this.loading = true;
-        this.error = undefined;
+        this.isLoading = true;
+        forceUpdate(this);
+        if (force) {
+            void this.fetchDebounced(address);
+            await this.fetchDebounced.flush();
+        } else {
+            await this.fetchDebounced(address);
+        }
+    }
 
+    private async fetchPointsCore(address: Address) {
+        this.error = undefined;
         const abortController = new AbortController();
         this.abortController = abortController;
 
         try {
+            this.isLoading = true;
+            await waitFor(2000);
             const points = await findNearestPoints({
-                city: this.addressCity,
-                postalCode: this.addressPostalCode,
-                street: this.addressStreet,
+                city: address.city ?? '',
+                street: address.street ?? '',
+                postalCode: address.postalCode ?? '',
                 type: this._providers,
                 signal: this.abortController.signal,
                 limit: this.limit,
@@ -244,7 +260,7 @@ export class PaczkoapiSelector {
             throw err;
         } finally {
             if (this.abortController === abortController) {
-                this.loading = false;
+                this.isLoading = false;
                 this.abortController = null;
             }
         }
@@ -279,17 +295,14 @@ export class PaczkoapiSelector {
 
     render() {
         return (
-            <fieldset
-                role="radiogroup"
-                class={`theme_${this.theme}`}
-            >
+            <fieldset role="radiogroup">
                 {/* Najbliższe punkty */}
                 {this.nearestPoints?.map(point => this.renderPoint(point))}
 
                 {/* Wybór punktu z mapy */}
                 {this.providersAvailable.map(provider => this.renderMap(provider))}
 
-                {this.loading && !this.nearestPoints?.length && <div class="loader" />}
+                {this.isLoading && <div class="loader" />}
             </fieldset>
         );
     }

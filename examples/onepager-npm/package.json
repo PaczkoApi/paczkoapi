@@ -1,5 +1,5 @@
 {
-    "name": "@paczkoapi/examples-npm",
+    "name": "@paczkoapi/examples-onepager-npm",
     "version": "0.0.0",
     "private": true,
     "type": "module",
@@ -7,7 +7,7 @@
         "start": "vite"
     },
     "dependencies": {
-        "paczkoapi": "latest"
+        "paczkoapi": "*"
     },
     "devDependencies": {
         "typescript": "~5.8.2",

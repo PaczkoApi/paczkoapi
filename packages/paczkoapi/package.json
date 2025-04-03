@@ -7,7 +7,6 @@
     },
     "license": "MIT",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
-    "sideEffects": false,
     "exports": {
         ".": {
             "import": {
@@ -37,7 +36,8 @@
                 "default": "./dist/index.lazy.mjs"
             }
         },
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./types": "./src/shims.d.ts"
     },
     "typesVersions": {
         "*": {
@@ -54,10 +54,10 @@
     "types": "./dist/index.d.ts",
     "files": [
         "dist",
-        "docs"
+        "src"
     ],
     "scripts": {
-        "build": "rollup -c",
+        "build": "ENV=prod rollup -c",
         "eslint": "eslint . --fix --cache",
         "smoke:cjs": "node tests/smoke.test.cjs",
         "smoke:mjs": "node tests/smoke.test.mjs",
@@ -77,10 +77,10 @@
         "@rollup/plugin-node-resolve": "^16.0.1",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
-        "rollup": "^4.38.0",
+        "rollup": "^4.39.0",
         "rollup-plugin-sourcemaps": "^0.6.3",
         "typedoc": "^0.28.1",
-        "typedoc-plugin-markdown": "^4.6.0",
+        "typedoc-plugin-markdown": "^4.6.1",
         "typedoc-vitepress-theme": "^1.1.2",
         "typescript": "^5.8.2"
     },
