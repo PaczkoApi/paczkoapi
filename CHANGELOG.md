@@ -1,3 +1,14 @@
+## 0.6.0 (2025-04-03)
+
+### 🚀 Features
+
+- poprawki w działaniu debouncingu ([08f136b](https://github.com/PaczkoApi/paczkoapi/commit/08f136b))
+- podbicie paczek ([bb08da8](https://github.com/PaczkoApi/paczkoapi/commit/bb08da8))
+
+### ❤️ Thank You
+
+- Michał Kędrzyński
+
 ## 0.5.1 (2025-04-01)
 
 ### 🩹 Fixes

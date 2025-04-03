@@ -1,6 +1,6 @@
 {
     "name": "paczkoapi",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/paczkoapi/paczkoapi.git"
@@ -64,7 +64,7 @@
         "watch": "rollup -c --watch"
     },
     "dependencies": {
-        "@paczkoapi/common": "^0.5.1",
+        "@paczkoapi/common": "^0.6.0",
         "tslib": "^2.8.1"
     },
     "devDependencies": {
@@ -72,7 +72,7 @@
         "@nzyme/esm": "^0.9.0",
         "@nzyme/tsconfig": "^0.9.0",
         "@nzyme/vitest": "^0.9.0",
-        "@paczkoapi/web": "^0.5.1",
+        "@paczkoapi/web": "^0.6.0",
         "@rollup/plugin-commonjs": "^28.0.3",
         "@rollup/plugin-node-resolve": "^16.0.1",
         "@rollup/plugin-terser": "^0.4.4",
