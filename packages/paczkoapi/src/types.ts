@@ -1,4 +1,4 @@
-import { Provider } from '@paczkoapi/common';
+import { Address, Provider } from '@paczkoapi/common';
 
 export type { Address, PickupPoint, Provider, Location } from '@paczkoapi/common';
 

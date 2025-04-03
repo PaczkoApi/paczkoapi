@@ -11,6 +11,11 @@ export const PROVIDERS: readonly Provider[] = ['inpost', 'dhl'];
 export const PROVIDERS_SET = new Set(PROVIDERS);
 
 /**
+ * Domyślni dostawcy
+ */
+export const PROVIDERS_DEFAULT: readonly Provider[] = ['inpost'];
+
+/**
  * Typ dostawcy
  */
 export type Provider = 'inpost' | 'dhl';
@@ -23,7 +28,7 @@ export function parseProviders(
     errors?: string[],
 ): readonly Provider[] {
     if (!providers) {
-        return PROVIDERS;
+        return PROVIDERS_DEFAULT;
     }
 
     let throwOnError = false;
@@ -37,7 +42,7 @@ export function parseProviders(
     }
 
     if (providers.length === 0) {
-        return PROVIDERS;
+        return PROVIDERS_DEFAULT;
     }
 
     for (const provider of providers) {

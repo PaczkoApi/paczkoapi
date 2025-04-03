@@ -65,7 +65,6 @@ export const NoRadio: StoryObj<Components.PaczkoapiSelector> = {
         addressCity: 'Warszawa',
         addressPostalCode: '00-687',
         showRadio: false,
-        theme: 'border',
     },
 };
 
@@ -78,6 +77,5 @@ export const BorderTheme: StoryObj<Components.PaczkoapiSelector> = {
             inpost: 10,
             dhl: 15,
         },
-        theme: 'border',
     },
 };

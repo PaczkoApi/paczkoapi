@@ -3,3 +3,5 @@ import { defineCustomElement as defineSelector } from '@paczkoapi/web/components
 
 defineSelector();
 defineModal();
+
+console.warn('initialize');

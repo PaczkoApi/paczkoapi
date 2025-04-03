@@ -9,7 +9,6 @@ export const config: Config = {
         },
         {
             type: 'dist-custom-elements',
-            externalRuntime: true,
             generateTypeDeclarations: true,
             minify: false,
         },
