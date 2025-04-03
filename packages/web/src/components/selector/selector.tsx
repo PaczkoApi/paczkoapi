@@ -201,14 +201,6 @@ export class PaczkoapiSelector {
     }
 
     private async fetchPoints(force = false) {
-        console.warn('fetchPoints', {
-            address: this._address,
-            providers: this._providers,
-            limit: this.limit,
-            debounce: this.debounce,
-            showRadio: this.showRadio,
-        });
-
         if (!this.fetchDebounced) {
             this.fetchDebounced = debounce(
                 (address: Address) => this.fetchPointsCore(address),

@@ -77,10 +77,10 @@
         "@rollup/plugin-node-resolve": "^16.0.1",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
-        "rollup": "^4.38.0",
+        "rollup": "^4.39.0",
         "rollup-plugin-sourcemaps": "^0.6.3",
         "typedoc": "^0.28.1",
-        "typedoc-plugin-markdown": "^4.6.0",
+        "typedoc-plugin-markdown": "^4.6.1",
         "typedoc-vitepress-theme": "^1.1.2",
         "typescript": "^5.8.2"
     },
