@@ -10,6 +10,7 @@ const isProduction = process.env.ENV === 'prod';
 const options: RollupOptions = {
     input: ['src/index.ts', 'src/index.lazy.ts'],
     plugins: plugins(),
+    cache: !isProduction,
     output: [
         // ESM bundle
         {
@@ -17,7 +18,7 @@ const options: RollupOptions = {
             entryFileNames: '[name].mjs',
             format: 'es',
             chunkFileNames: 'chunks/[hash].mjs',
-            sourcemap: !isProduction,
+            sourcemap: true,
         },
         // CJS bundle
         {
@@ -25,7 +26,7 @@ const options: RollupOptions = {
             entryFileNames: '[name].cjs',
             format: 'cjs',
             chunkFileNames: 'chunks/[hash].cjs',
-            sourcemap: !isProduction,
+            sourcemap: true,
         },
     ],
 };
@@ -33,13 +34,14 @@ const options: RollupOptions = {
 const optionsIife: RollupOptions = {
     input: 'src/index.ts',
     plugins: plugins(),
+    cache: !isProduction,
     output: [
         // IIFE bundle
         {
             file: 'dist/index.js',
             format: 'iife',
             inlineDynamicImports: true,
-            sourcemap: !isProduction,
+            sourcemap: true,
         },
     ],
 };
@@ -50,8 +52,8 @@ function plugins() {
     return [
         typescript(),
         commonjs(),
-        isProduction && terser(),
-        isProduction && sourcemaps({}),
+        terser(),
+        sourcemaps({}),
         nodeResolve({
             preferBuiltins: true,
             extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
