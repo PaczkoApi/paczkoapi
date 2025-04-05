@@ -68,10 +68,10 @@
         "tslib": "^2.8.1"
     },
     "devDependencies": {
-        "@nzyme/eslint": "^0.10.0",
-        "@nzyme/esm": "^0.10.0",
-        "@nzyme/tsconfig": "^0.10.0",
-        "@nzyme/vitest": "^0.10.0",
+        "@nzyme/eslint": "^0.11.0",
+        "@nzyme/esm": "^0.11.0",
+        "@nzyme/tsconfig": "^0.11.0",
+        "@nzyme/vitest": "^0.11.0",
         "@paczkoapi/web": "^0.6.0",
         "@rollup/plugin-commonjs": "^28.0.3",
         "@rollup/plugin-node-resolve": "^16.0.1",
