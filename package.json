@@ -24,15 +24,16 @@
         "setup": "yarn && nzyme monorepo",
         "smoke": "turbo run smoke:cjs smoke:mjs",
         "test": "vitest run",
-        "upgrade": "yarn upgrade:auto && yarn upgrade-interactive",
-        "upgrade:auto": "yarn up \"@nzyme/*\"",
+        "upgrade": "yarn upgrade:deps && yarn upgrade-interactive",
+        "upgrade:deps": "yarn up \"@nzyme/*\"",
+        "upgrade:self": "yarn set version berry",
         "watch": "yarn monorepo && yarn build:esm --watch"
     },
     "devDependencies": {
         "@nx/js": "^20.6.4",
-        "@nzyme/cli": "^0.9.0",
-        "@nzyme/eslint": "^0.9.0",
-        "@nzyme/tsconfig": "^0.9.0",
+        "@nzyme/cli": "^0.10.0",
+        "@nzyme/eslint": "^0.10.0",
+        "@nzyme/tsconfig": "^0.10.0",
         "@swc-node/register": "^1.10.10",
         "@swc/core": "^1.11.13",
         "@vitest/coverage-v8": "3.0.9",
@@ -45,5 +46,5 @@
         "typescript": "^5.8.2",
         "vitest": "^3.0.9"
     },
-    "packageManager": "yarn@4.7.0"
+    "packageManager": "yarn@4.8.1"
 }

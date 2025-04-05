@@ -9,16 +9,16 @@
 
 | Property            | Attribute             | Description                                 | Type                                                                                | Default     |
 | ------------------- | --------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------- | ----------- |
-| `address`           | --                    | The address to search for pickup points     | `Address \| null`                                                                   | `null`      |
+| `address`           | `address`             | The address to search for pickup points     | `Address \| null`                                                                   | `null`      |
 | `addressCity`       | `address-city`        | The city to search for pickup points        | `null \| string \| undefined`                                                       | `undefined` |
 | `addressPostalCode` | `address-postal-code` | The postal code to search for pickup points | `null \| string \| undefined`                                                       | `undefined` |
 | `addressStreet`     | `address-street`      | The street to search for pickup points      | `null \| string \| undefined`                                                       | `undefined` |
 | `debounce`          | `debounce`            | The debounce time for the fetch points      | `number \| undefined`                                                               | `undefined` |
 | `limit`             | `limit`               | The limit of pickup points to fetch         | `null \| number \| undefined`                                                       | `undefined` |
-| `point`             | --                    | The currently selected pickup point         | `PickupPoint \| null`                                                               | `null`      |
+| `point`             | `point`               | The currently selected pickup point         | `PickupPoint \| null`                                                               | `null`      |
 | `pointName`         | `point-name`          | The currently selected pickup point ID      | `null \| string \| undefined`                                                       | `undefined` |
 | `pointProvider`     | `point-provider`      | The currently selected pickup point type    | `"dhl" \| "inpost" \| null \| undefined`                                            | `undefined` |
-| `prices`            | --                    | The prices of pickup points                 | `null \| undefined \| { inpost?: number \| undefined; dhl?: number \| undefined; }` | `undefined` |
+| `prices`            | `prices`              | The prices of pickup points                 | `null \| undefined \| { inpost?: number \| undefined; dhl?: number \| undefined; }` | `undefined` |
 | `providers`         | `providers`           | The providers to search for pickup points   | `"dhl" \| "inpost" \| Provider[]`                                                   | `[]`        |
 | `showRadio`         | `show-radio`          | Whether to show the radios                  | `boolean \| null \| undefined`                                                      | `undefined` |
 

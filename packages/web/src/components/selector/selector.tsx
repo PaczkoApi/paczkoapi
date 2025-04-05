@@ -19,7 +19,7 @@ import { formatMoney } from 'src/utils/formatMoney';
 import { openDhlMap } from 'src/utils/openDhlMap';
 import { openInpostMap } from 'src/utils/openInpostMap';
 
-import { formatLength, waitFor } from '@nzyme/utils';
+import { formatLength } from '@nzyme/utils';
 
 import DhlLogo from '../../assets/dhl.svg';
 import InpostLogo from '../../assets/inpost.svg';
@@ -239,17 +239,16 @@ export class PaczkoapiSelector {
 
         try {
             this.isLoading = true;
-            await waitFor(2000);
-            const points = await findNearestPoints({
+            const result = await findNearestPoints({
                 city: address.city ?? '',
                 street: address.street ?? '',
                 postalCode: address.postalCode ?? '',
-                type: this._providers,
+                providers: this._providers,
                 signal: this.abortController.signal,
                 limit: this.limit,
             });
 
-            this.nearestPoints = points;
+            this.nearestPoints = result.points;
             this.selectFirstPoint();
         } catch (err) {
             if (err instanceof Error && err.name !== 'AbortError') {
@@ -263,6 +262,8 @@ export class PaczkoapiSelector {
                 this.isLoading = false;
                 this.abortController = null;
             }
+
+            forceUpdate(this);
         }
     }
 
@@ -337,7 +338,7 @@ export class PaczkoapiSelector {
                         >
                             {this.getPointAddress(point)}
                         </div>
-                        {point.distance && (
+                        {point.distance != null && (
                             <div class="address">{formatLength(point.distance)} od Ciebie</div>
                         )}
                         {children}

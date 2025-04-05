@@ -4,61 +4,70 @@ import { API_URL_POINTS, ApiError, getApiUrl, parseProviders } from '@paczkoapi/
 import { fetchApi } from './fetchApi.js';
 
 /**
- * Find nearest points input
+ * Parametry wejściowe dla wyszukiwania najbliższych punktów
  */
 export interface FindNearestPointsInput {
     /**
-     * Type of the pickup points.
-     * If not provided, all types will be used.
+     * Dostawcy punktów odbioru.
+     * Możesz podać pojedynczego dostawcę lub tablicę dostawców.
      *
-     * You can provide a single type or an array of types.
-     *
+     * @default "inpost"
      * @example "inpost"
      * @example ["inpost", "dpd"]
      */
-    type?: Provider | Provider[];
+    providers?: Provider | Provider[];
 
     /**
-     * City name
+     * Nazwa miasta
      * @example "Warszawa"
      */
     city: string;
 
     /**
-     * Postal code
+     * Kod pocztowy
      * @example "00-000"
      */
     postalCode?: string;
 
     /**
-     * Address including street name and number.
+     * Adres zawierający nazwę ulicy i numer.
      * @example "ul. Jana Pawła II 1"
      */
     street: string;
 
     /**
-     * Limit the number of points returned.
+     * Limit liczby zwracanych punktów.
      * @example 10
      * @default 5
      */
     limit?: number | null;
 
     /**
-     * Abort signal
+     * Sygnał przerwania
      */
     signal?: AbortSignal;
 }
 
 /**
- * Find nearest points to the given address.
+ * Wynik wyszukiwania najbliższych punktów
+ */
+export interface FindNearestPointsResult {
+    /**
+     * Punkty odbioru
+     */
+    points: PickupPoint[];
+}
+
+/**
+ * Znajdź najbliższe punkty dla podanego adresu.
  */
 export async function findNearestPoints(input: FindNearestPointsInput) {
     const url = new URL(API_URL_POINTS, getApiUrl());
 
-    if (input.type) {
-        const providers = parseProviders(input.type);
-        if (providers.length === 0) {
-            url.searchParams.set('type', providers.join(','));
+    if (input.providers) {
+        const providers = parseProviders(input.providers);
+        if (providers.length) {
+            url.searchParams.set('providers', providers.join(','));
         }
     }
 
@@ -81,9 +90,9 @@ export async function findNearestPoints(input: FindNearestPointsInput) {
         url.searchParams.set('limit', input.limit.toString());
     }
 
-    const points = await fetchApi<PickupPoint[]>(url.toString(), {
+    const result = await fetchApi<FindNearestPointsResult>(url.toString(), {
         signal: input.signal,
     });
 
-    return points ?? [];
+    return result;
 }

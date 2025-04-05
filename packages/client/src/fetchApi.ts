@@ -3,7 +3,7 @@ import { ApiError } from '@paczkoapi/common';
 /**
  * Fetch data from the API.
  */
-export async function fetchApi<T>(url: string, init?: RequestInit): Promise<T | null> {
+export async function fetchApi<T>(url: string, init?: RequestInit): Promise<T> {
     const response = await fetch(url, init);
     if (!response.ok) {
         if (response.status === 400) {
@@ -19,11 +19,6 @@ export async function fetchApi<T>(url: string, init?: RequestInit): Promise<T | 
         throw new ApiError(message, response.status, [error], response);
     }
 
-    if (response.status === 204) {
-        return null;
-    }
-
     const data = await response.json();
-
     return data as T;
 }
