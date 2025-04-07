@@ -10,7 +10,6 @@ import {
     Prop,
     State,
     type VNode,
-    Watch,
     forceUpdate,
     h,
 } from '@stencil/core';
@@ -103,6 +102,7 @@ export class PaczkoapiSelector {
 
     set address(value: Address | null | undefined) {
         this._address = value ?? null;
+        void this.fetchPoints();
     }
 
     /**
@@ -174,6 +174,7 @@ export class PaczkoapiSelector {
     private _providers: Provider[] = [];
     private _point: PickupPoint | null = null;
     private _address: Address | null = null;
+    private _addressCurrent: Address | null = null;
 
     private fetchDebounced: ReturnType<typeof debounce<typeof this.fetchPointsCore>> | undefined;
 
@@ -185,13 +186,6 @@ export class PaczkoapiSelector {
         return this._providers;
     }
 
-    @Watch('address')
-    @Watch('limit')
-    @Watch('providers')
-    onSearchParamsChange() {
-        void this.fetchPoints();
-    }
-
     componentWillLoad() {
         void this.fetchPoints();
     }
@@ -201,6 +195,8 @@ export class PaczkoapiSelector {
     }
 
     private async fetchPoints(force = false) {
+        console.warn('fetchPoints', this._address);
+
         if (!this.fetchDebounced) {
             this.fetchDebounced = debounce(
                 (address: Address) => this.fetchPointsCore(address),
@@ -233,9 +229,22 @@ export class PaczkoapiSelector {
     }
 
     private async fetchPointsCore(address: Address) {
+        console.warn('fetchPointsCore', address);
+
         this.error = undefined;
+
+        if (
+            this._addressCurrent &&
+            this._addressCurrent.city === address.city &&
+            this._addressCurrent.postalCode === address.postalCode &&
+            this._addressCurrent.street === address.street
+        ) {
+            return;
+        }
+
         const abortController = new AbortController();
         this.abortController = abortController;
+        this._addressCurrent = address;
 
         try {
             this.isLoading = true;
@@ -284,6 +293,8 @@ export class PaczkoapiSelector {
     }
 
     private cancelFetch() {
+        console.warn('cancelFetch', this.abortController);
+
         if (this.abortController) {
             this.abortController.abort('Canceled by user');
             this.abortController = null;

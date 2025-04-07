@@ -1,9 +1,6 @@
 import { createSelector } from 'paczkoapi/lazy';
-import { setApiLocal } from '@paczkoapi/common';
 // można też użyć bez lazy loadingu:
 // import { createSelector } from 'paczkoapi';
-
-setApiLocal();
 
 // Tworzymy komponent selektora
 const selector = createSelector('#selector', {
