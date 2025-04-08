@@ -8,7 +8,7 @@
         "moduleResolution": "bundler",
         "composite": false,
         "declaration": true,
-        "tsBuildInfoFile": "./.tsbuildinfo"
+        "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
     },
     "include": ["src/**/*.ts"],
     "exclude": []

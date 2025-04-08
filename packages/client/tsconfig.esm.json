@@ -1,8 +1,10 @@
 {
-    "extends": ["@nzyme/tsconfig/esm.json", "./tsconfig.base.json"],
+    "extends": "@nzyme/tsconfig/esm.json",
     "compilerOptions": {
-        "outDir": "./dist/esm",
-        "tsBuildInfoFile": "./tsconfig.esm.tsbuildinfo",
-        "types": ["node"]
-    }
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+    },
+    "include": ["src"],
+    "exclude": ["src/**/*.test.ts"]
 }

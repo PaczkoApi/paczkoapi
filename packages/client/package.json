@@ -12,21 +12,21 @@
     "exports": {
         ".": {
             "import": {
-                "types": "./dist/esm/index.d.ts",
-                "default": "./dist/esm/index.js"
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
             },
             "require": {
-                "types": "./dist/cjs/index.d.ts",
-                "default": "./dist/cjs/index.cjs"
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.cjs"
             },
             "default": {
-                "types": "./dist/esm/index.d.ts",
-                "default": "./dist/esm/index.js"
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
             }
         }
     },
-    "main": "./dist/cjs/index.cjs",
-    "types": "./dist/esm/index.d.ts",
+    "main": "./dist/index.cjs",
+    "types": "./dist/index.d.ts",
     "files": [
         "dist"
     ],
@@ -36,18 +36,21 @@
         "smoke:mjs": "node tests/smoke.test.mjs"
     },
     "dependencies": {
-        "@nzyme/types": "^0.11.0",
-        "@nzyme/utils": "^0.11.0",
+        "@nzyme/types": "^0.12.1",
+        "@nzyme/utils": "^0.12.1",
         "@paczkoapi/common": "0.6.0",
         "tslib": "^2.8.1"
     },
     "devDependencies": {
-        "@nzyme/eslint": "^0.11.0",
-        "@nzyme/tsconfig": "^0.11.0",
-        "@nzyme/vitest": "^0.11.0",
+        "@nzyme/eslint": "^0.12.1",
+        "@nzyme/tsconfig": "^0.12.1",
+        "@nzyme/vitest": "^0.12.1",
         "typescript": "^5.8.2"
     },
     "publishConfig": {
         "access": "public"
+    },
+    "nzyme": {
+        "cjs": true
     }
 }
