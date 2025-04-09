@@ -1,5 +1,12 @@
 {
-    "extends": "@nzyme/tsconfig/esm.json",
-    "include": [],
-    "references": []
+  "include": [],
+  "extends": "./tsconfig.esm.json",
+  "references": [
+    {
+      "path": "./packages/client/tsconfig.json"
+    },
+    {
+      "path": "./packages/common/tsconfig.json"
+    }
+  ]
 }
