@@ -5,6 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { PickupPoint, Provider } from "@paczkoapi/client";
+import { Address } from "@paczkoapi/common";
+export { PickupPoint, Provider } from "@paczkoapi/client";
+export { Address } from "@paczkoapi/common";
 export namespace Components {
     interface PaczkoapiModal {
         /**
@@ -16,7 +20,7 @@ export namespace Components {
         /**
           * The address to search for pickup points
          */
-        "address": Address | null | undefined;
+        "address": Address | null;
         /**
           * The city to search for pickup points
          */
@@ -132,7 +136,7 @@ declare namespace LocalJSX {
         /**
           * The address to search for pickup points
          */
-        "address"?: Address | null | undefined;
+        "address"?: Address | null;
         /**
           * The city to search for pickup points
          */

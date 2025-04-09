@@ -195,8 +195,6 @@ export class PaczkoapiSelector {
     }
 
     private async fetchPoints(force = false) {
-        console.warn('fetchPoints', this._address);
-
         if (!this.fetchDebounced) {
             this.fetchDebounced = debounce(
                 (address: Address) => this.fetchPointsCore(address),
@@ -208,13 +206,19 @@ export class PaczkoapiSelector {
             );
         }
 
+        const address = this._address;
+        if (address && this._addressCurrent && this.isSameAddress(this._addressCurrent, address)) {
+            return;
+        }
+
         // Cancel any in-flight requests
         this.cancelFetch();
 
-        const address = this._address;
         if (!address || !address.city || !address.postalCode || !address.street) {
             this.nearestPoints = [];
             this.isLoading = false;
+            this._addressCurrent = null;
+            forceUpdate(this);
             return;
         }
 
@@ -229,16 +233,9 @@ export class PaczkoapiSelector {
     }
 
     private async fetchPointsCore(address: Address) {
-        console.warn('fetchPointsCore', address);
-
         this.error = undefined;
 
-        if (
-            this._addressCurrent &&
-            this._addressCurrent.city === address.city &&
-            this._addressCurrent.postalCode === address.postalCode &&
-            this._addressCurrent.street === address.street
-        ) {
+        if (this._addressCurrent && this.isSameAddress(this._addressCurrent, address)) {
             return;
         }
 
@@ -247,7 +244,7 @@ export class PaczkoapiSelector {
         this._addressCurrent = address;
 
         try {
-            this.isLoading = true;
+            // this.isLoading = true;
             const result = await findNearestPoints({
                 city: address.city ?? '',
                 street: address.street ?? '',
@@ -293,8 +290,6 @@ export class PaczkoapiSelector {
     }
 
     private cancelFetch() {
-        console.warn('cancelFetch', this.abortController);
-
         if (this.abortController) {
             this.abortController.abort('Canceled by user');
             this.abortController = null;
@@ -526,5 +521,13 @@ export class PaczkoapiSelector {
                     alt: 'Logo DHL',
                 };
         }
+    }
+
+    private isSameAddress(address1: Address, address2: Address) {
+        return (
+            address1.city === address2.city &&
+            address1.postalCode === address2.postalCode &&
+            address1.street === address2.street
+        );
     }
 }

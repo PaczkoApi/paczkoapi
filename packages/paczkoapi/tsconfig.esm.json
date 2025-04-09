@@ -7,8 +7,8 @@
         "module": "ESNext",
         "moduleResolution": "bundler",
         "composite": false,
-        "declaration": true,
-        "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+        "incremental": false,
+        "noEmit": true
     },
     "include": ["src/**/*.ts"],
     "exclude": []

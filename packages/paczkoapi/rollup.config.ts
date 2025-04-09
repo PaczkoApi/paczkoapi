@@ -2,15 +2,14 @@ import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import type { Plugin, RollupOptions } from 'rollup';
+import type { RollupOptions } from 'rollup';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const isProduction = process.env.ENV === 'prod';
 
 const options: RollupOptions = {
+    ...commonConfig(),
     input: ['src/index.ts', 'src/index.lazy.ts'],
-    plugins: plugins(),
-    cache: !isProduction,
     output: [
         // ESM bundle
         {
@@ -32,9 +31,8 @@ const options: RollupOptions = {
 };
 
 const optionsIife: RollupOptions = {
+    ...commonConfig(),
     input: 'src/index.ts',
-    plugins: plugins(),
-    cache: !isProduction,
     output: [
         // IIFE bundle
         {
@@ -48,15 +46,37 @@ const optionsIife: RollupOptions = {
 
 export default [options, optionsIife];
 
-function plugins() {
-    return [
-        typescript(),
-        commonjs(),
-        terser(),
-        sourcemaps({}),
-        nodeResolve({
-            preferBuiltins: true,
-            extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
-        }),
-    ].filter(Boolean) as Plugin[];
+function commonConfig(): RollupOptions {
+    return {
+        cache: !isProduction,
+        watch: {
+            clearScreen: false,
+        },
+        plugins: [
+            typescript(),
+            commonjs(),
+            isProduction && terser(),
+            sourcemaps({}),
+            nodeResolve({
+                preferBuiltins: true,
+                extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
+            }),
+        ],
+        external: id => {
+            if (isProduction) {
+                return false;
+            }
+
+            if (/^node:/.test(id) || /^[\w_-]+$/.test(id)) {
+                // Node built-in modules and third party modules
+                return true;
+            }
+
+            if (/node_modules/.test(id)) {
+                return true;
+            }
+
+            return id.startsWith('@paczkoapi/');
+        },
+    };
 }

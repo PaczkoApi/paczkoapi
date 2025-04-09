@@ -46,7 +46,7 @@
         "@nzyme/dom-utils": "^0.12.1",
         "@nzyme/utils": "^0.12.1",
         "@paczkoapi/client": "0.6.0",
-        "@stencil/core": "^4.28.2",
+        "@stencil/core": "^4.29.2",
         "lodash.debounce": "^4.0.8"
     },
     "devDependencies": {
@@ -68,7 +68,7 @@
         "jest": "^29.7.0",
         "jest-cli": "^29.7.0",
         "lit": "^3.2.1",
-        "puppeteer": "^24.5.0",
+        "puppeteer": "^24.6.0",
         "storybook": "^8.6.12",
         "vite": "^6.2.5"
     },
