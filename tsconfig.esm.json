@@ -1,0 +1,5 @@
+{
+    "extends": "@nzyme/tsconfig/esm.json",
+    "include": ["vitest.workspace.ts"],
+    "references": []
+}
