@@ -24,9 +24,9 @@
         "setup": "yarn && nzyme monorepo",
         "smoke": "turbo run smoke:cjs smoke:mjs",
         "test": "vitest run",
-        "upgrade": "yarn upgrade:deps && yarn upgrade-interactive",
-        "upgrade:deps": "yarn up \"@nzyme/*\"",
-        "upgrade:self": "yarn set version berry",
+        "update": "yarn update:deps && yarn update-interactive",
+        "update:deps": "yarn up \"@nzyme/*\"",
+        "update:self": "yarn set version berry",
         "watch": "yarn monorepo && yarn build:esm --watch"
     },
     "devDependencies": {
