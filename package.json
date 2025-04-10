@@ -12,8 +12,8 @@
     ],
     "scripts": {
         "build": "yarn build:esm && yarn build:cjs && yarn build:turbo",
-        "build:cjs": "tsc --build ./.nzyme/tsconfig.cjs.json && yarn nzyme rename-cjs",
-        "build:esm": "tsc --build ./.nzyme/tsconfig.esm.json",
+        "build:cjs": "nzyme build cjs",
+        "build:esm": "tsc --build",
         "build:turbo": "turbo run build",
         "clean": "del \"**/tsconfig.*.dev.json\" \"**/dist\" \"**/.turbo\" \"**/.nzyme\" \"**/.tsbuildinfo\" \"**/*.tsbuildinfo\" \"!**/node_modules/**\"",
         "coverage": "vitest run --coverage",
