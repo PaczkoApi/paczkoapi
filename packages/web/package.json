@@ -61,7 +61,7 @@
         "@storybook/blocks": "^8.6.12",
         "@storybook/test": "^8.6.12",
         "@storybook/web-components": "^8.6.12",
-        "@storybook/web-components-vite": "^8.6.12",
+        "@storybook/web-components-vite": "^9.0.16",
         "@types/jest": "^29.5.14",
         "@types/lodash.debounce": "^4.0.9",
         "@types/node": "^22.14.0",
