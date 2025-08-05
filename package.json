@@ -30,7 +30,7 @@
         "watch": "yarn monorepo && yarn build:esm --watch"
     },
     "devDependencies": {
-        "@nx/js": "^20.6.4",
+        "@nx/js": "^21.3.11",
         "@nzyme/cli": "^0.14.0",
         "@nzyme/eslint": "^0.14.0",
         "@nzyme/tsconfig": "^0.14.0",
