@@ -60,7 +60,7 @@
         "@storybook/addon-events": "^6.2.9",
         "@storybook/blocks": "^8.6.12",
         "@storybook/test": "^8.6.12",
-        "@storybook/web-components": "^8.6.12",
+        "@storybook/web-components": "^9.1.2",
         "@storybook/web-components-vite": "^8.6.12",
         "@types/jest": "^29.5.14",
         "@types/lodash.debounce": "^4.0.9",
